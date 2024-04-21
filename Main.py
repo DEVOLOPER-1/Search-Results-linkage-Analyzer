@@ -16,7 +16,7 @@ params = {
 search = GoogleSearch(params)
 results = search.get_dict()
 organic_results = results["organic_results"]
-
+print(f"{organic_results}\n\n\n\n\n\n\n")
 organic_specific_results = {}
 positions = []
 titles = []
