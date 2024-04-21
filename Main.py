@@ -120,19 +120,27 @@ with open("website_title_with_position.json", "w") as f:
 Total_TF = 0
 TF_Values_tuple = []
 relevancy_valued_dict_2 = {}
-#Calculating TF
+# Calculating TF
 for single_snippet_tuple in snippets_dict.values():
     for single_statement in single_snippet_tuple:
-        TF = round((the_all_words_of_tuples_of_snippets.count(single_statement)/len(the_all_words_of_tuples_of_snippets)),1)
-        Total_TF += round(TF,1) #Approximation of TF
+        TF = round(
+            (
+                the_all_words_of_tuples_of_snippets.count(single_statement)
+                / len(the_all_words_of_tuples_of_snippets)
+            ),
+            1,
+        )
+        Total_TF += round(TF, 1)  # Approximation of TF
     TF_Values_tuple.append(Total_TF)
 
-for index , element in   enumerate(organic_results):
+for index, element in enumerate(organic_results):
     key = element["title"]
     if key not in relevancy_valued_dict_2:
         relevancy_valued_dict_2[key] = TF_Values_tuple[index]
-        
-print(relevancy_valued_dict_2)        
+    if key in relevancy_valued_dict_2:
+        relevancy_valued_dict_2[key] += TF_Values_tuple[index]
+
+print(relevancy_valued_dict_2)
 
 # Converting organic_specific_results dictionary into json
 website_title_with_relevancy_values_2 = json.dumps(
@@ -140,6 +148,9 @@ website_title_with_relevancy_values_2 = json.dumps(
 )  # I found that the indent value is to better read the output if printed
 
 # write the JSON string to a file
-with open("website_title_with_relevancy_values.json", "w") as f:
+with open("website_title_with_relevancy_values_2.json", "w") as f:
     f.write(website_title_with_relevancy_values_2)
     print("Done")
+
+
+print(len(TF_Values_tuple))
