@@ -36,7 +36,6 @@ for num, single_result in enumerate(organic_results):
 #     positions.append(f"{single_result["position"]}")
 
 
-
 # print(organic_specific_results)
 
 # Making a list of all words in snippets to re-compare it with each value of snippet dict
@@ -54,10 +53,12 @@ for single_snippet in organic_results:
     key = single_snippet["title"]
     item_tuple = single_snippet["snippet"].lower().split(",")
     if key not in snippets_dict:
-        snippets_dict[key] = item_tuple 
+        snippets_dict[key] = item_tuple
 
     if key in snippets_dict:
-        temp_list.extend(item_tuple) #As I understand extend is for appending items with no making of iterations
+        temp_list.extend(
+            item_tuple
+        )  # As I understand extend is for appending items with no making of iterations
         snippets_dict[key].extend(temp_list)
 
 positions_dict = {}
@@ -66,24 +67,15 @@ for single_Position in organic_results:
     key = single_Position["title"]
     int_item = single_Position["position"]
     if key not in snippets_dict:
-        positions_dict[key] = int_item 
-    
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+        positions_dict[key] = int_item
+
+
 x = 0
 relevancy = 0
 relevancy_values = []
 relevancy_valued_dict = {}
 
-#print(the_all_words_of_tuples_of_snippets)
+# print(the_all_words_of_tuples_of_snippets)
 
 
 # The process of comparison of each value of key with all values of other key
@@ -113,11 +105,22 @@ for i in organic_results:
 
 
 # Converting organic_specific_results dictionary into json
-json_object_organic_specific_results = json.dumps(
+website_title_with_position = json.dumps(
     positions_dict, indent=4
 )  # I found that the indent value is to better read the output if printed
-print(json_object_organic_specific_results)
+
 # write the JSON string to a file
-with open("organic_specific_results_with_no_ctr.json", "w") as f:
-    f.write(json_object_organic_specific_results)
+with open("website_title_with_position.json", "w") as f:
+    f.write(website_title_with_position)
+    print("Done")
+
+
+# Converting organic_specific_results dictionary into json
+website_title_with_relevancy_values = json.dumps(
+    relevancy_valued_dict, indent=4
+)  # I found that the indent value is to better read the output if printed
+
+# write the JSON string to a file
+with open("website_title_with_relevancy_values.json", "w") as f:
+    f.write(website_title_with_relevancy_values)
     print("Done")
