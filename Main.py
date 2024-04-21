@@ -29,11 +29,11 @@ for num, single_result in enumerate(organic_results):
     )
     print("____________________________________________________________")
 
-# Appending specified results to an empty lists
-# I made the  ###  as  a delimiter to extract the values of json file correctly
-for single_result in organic_results:
-    titles.append(f"{single_result["title"]}")
-    positions.append(f"{single_result["position"]}")
+# # Appending specified results to an empty lists
+# # I made the  ###  as  a delimiter to extract the values of json file correctly
+# for single_result in organic_results:
+#     titles.append(f"{single_result["title"]}")
+#     positions.append(f"{single_result["position"]}")
 
 
 
@@ -53,12 +53,31 @@ temp_list = []
 for single_snippet in organic_results:
     key = single_snippet["title"]
     item_tuple = single_snippet["snippet"].lower().split(",")
-    item_tuple_2 = single_snippet["position"]
     if key not in snippets_dict:
-        snippets_dict[key] = [item_tuple_2 , item_tuple]
+        snippets_dict[key] = item_tuple 
 
     if key in snippets_dict:
-        snippets_dict[key].extend(item_tuple)
+        temp_list.extend(item_tuple) #As I understand extend is for appending items with no making of iterations
+        snippets_dict[key].extend(temp_list)
+
+positions_dict = {}
+
+for single_Position in organic_results:
+    key = single_Position["title"]
+    int_item = single_Position["position"]
+    if key not in snippets_dict:
+        positions_dict[key] = int_item 
+    
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
 x = 0
 relevancy = 0
 relevancy_values = []
@@ -95,7 +114,7 @@ for i in organic_results:
 
 # Converting organic_specific_results dictionary into json
 json_object_organic_specific_results = json.dumps(
-    snippets_dict, indent=4
+    positions_dict, indent=4
 )  # I found that the indent value is to better read the output if printed
 print(json_object_organic_specific_results)
 # write the JSON string to a file
