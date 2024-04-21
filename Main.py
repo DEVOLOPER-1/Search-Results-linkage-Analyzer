@@ -18,8 +18,7 @@ results = search.get_dict()
 organic_results = results["organic_results"]
 print(f"{organic_results}\n\n\n\n\n\n\n")
 
-positions = []
-titles = []
+
 organic_results = results["organic_results"]
 
 # Primitive Display for Results
@@ -29,14 +28,6 @@ for num, single_result in enumerate(organic_results):
     )
     print("____________________________________________________________")
 
-# # Appending specified results to an empty lists
-# # I made the  ###  as  a delimiter to extract the values of json file correctly
-# for single_result in organic_results:
-#     titles.append(f"{single_result["title"]}")
-#     positions.append(f"{single_result["position"]}")
-
-
-# print(organic_specific_results)
 
 # Making a list of all words in snippets to re-compare it with each value of snippet dict
 the_all_words_of_tuples_of_snippets = []
@@ -124,3 +115,6 @@ website_title_with_relevancy_values = json.dumps(
 with open("website_title_with_relevancy_values.json", "w") as f:
     f.write(website_title_with_relevancy_values)
     print("Done")
+
+
+
