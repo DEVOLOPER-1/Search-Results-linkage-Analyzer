@@ -180,5 +180,5 @@ for key, item in relevancy_valued_dict_2.items():
 G.add_nodes_from(nodes_of_relevance_network)
 G.add_edges_from(edges_of_relevance_network)
 nx.draw(G, with_labels=True)
-#plt.show()
+# plt.show()
 plt.savefig("Network Graph.jpeg", format="JPEG")
