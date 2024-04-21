@@ -41,23 +41,54 @@ for num, single_result in enumerate(organic_results):
 
 #print(organic_specific_results)
 
+#Making a list of all words in snippets to re-compare it with each value of sinppet dict
+the_all_words_of_tuples_of_snippets = []
+for snippet in organic_results:
+    for word_in_no_tuple in snippet["snippet"].lower().split(","):
+        the_all_words_of_tuples_of_snippets.append(word_in_no_tuple)
 
-#Calculating The Relevancy of each result to the others
+#Making a dictionary with key as title and value as snippets
 snippets_dict = {}
 temp_list = []
+
 for single_snippet in organic_results:
-        print("_______________________________________________________________\n")
-        #temp_list.append(single_snippet["snippet"].lower().split(","))
         key = single_snippet["title"]
         item = single_snippet["snippet"].lower().split(",")
         #for element in snippets_dict:
-        if key not in snippets_dict:
-            snippets_dict[key] = item
-        else:
-            continue    
-  
-print(snippets_dict)
+        #if key not in snippets_dict:
+        snippets_dict[key] = item
+        #else: #Optional condition
+            #continue   
+x = 0        
+relevancy = 0
+relevancy_values = []
+relevancy_valued_dict = {}
 
+print(the_all_words_of_tuples_of_snippets)
+#The process of comparison of each value of key with all values of other key
+#And making a new dic with relevancy values by numbers
+
+for key_of_dict, tuple_value in snippets_dict.items():
+    for word in tuple_value:
+        for single_snippet in the_all_words_of_tuples_of_snippets:
+            if word == single_snippet:
+                x += 1
+    relevancy = x - len(tuple_value)
+    relevancy_values.append(relevancy)
+    if key_of_dict not in relevancy_valued_dict:
+        if relevancy == 0:
+            relevancy_valued_dict[key_of_dict] = (relevancy+1)
+        else:    
+            relevancy_valued_dict[key_of_dict] = relevancy
+
+print(f"{relevancy_values}\n\n\n")
+print(relevancy_valued_dict)
+print("\n_____________________________________")
+print(relevancy_valued_dict.keys())
+print(snippets_dict.keys())
+for i in organic_results:
+    print("\n_____________________________________")
+    print((i["title"]))
 
 
 
