@@ -1,6 +1,8 @@
 # pip install google-search-results
 from serpapi import GoogleSearch
 import json
+import statistics
+import networkx as nx
 
 User_Query = input("Enter your query: ")
 while User_Query == " " or User_Query is None or User_Query == "":
@@ -154,3 +156,8 @@ with open("website_title_with_relevancy_values_2.json", "w") as f:
 
 
 print(len(TF_Values_tuple))
+
+
+TF_Values_tuple_Mean = statistics.mean(TF_Values_tuple)
+Treshold = TF_Values_tuple_Mean
+print(Treshold)
