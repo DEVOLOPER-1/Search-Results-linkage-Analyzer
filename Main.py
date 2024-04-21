@@ -66,7 +66,7 @@ positions_dict = {}
 for single_Position in organic_results:
     key = single_Position["title"]
     int_item = single_Position["position"]
-    if key not in snippets_dict:
+    if key not in positions_dict:
         positions_dict[key] = int_item
 
 
