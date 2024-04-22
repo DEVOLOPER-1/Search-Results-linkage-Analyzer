@@ -131,8 +131,8 @@ Total_TF = 0
 TF_Values_tuple = []
 relevancy_valued_dict_2 = {}
 # Calculating TF
-for single_snippet_tuple in (snippets_dict.values()):
-    for single_statement in (single_snippet_tuple):
+for single_snippet_tuple in snippets_dict.values():
+    for single_statement in single_snippet_tuple:
         TF = round(
             (
                 the_all_words_of_tuples_of_snippets.count((single_statement.lower()))
@@ -145,7 +145,7 @@ for single_snippet_tuple in (snippets_dict.values()):
 print(the_all_words_of_tuples_of_snippets)
 
 num_of_index = 0
-for key , value in snippets_dict.items(): #we can put either .keys() or .items()
+for key, value in snippets_dict.items():  # we can put either .keys() or .items()
     temp_key = key
     if temp_key not in relevancy_valued_dict_2:
         relevancy_valued_dict_2[temp_key] = TF_Values_tuple[num_of_index]
@@ -212,18 +212,8 @@ plt.axis("off")
 plt.savefig("Network Graph.jpeg", format="JPEG", bbox_inches="tight", dpi=1800)
 
 
-
-
-
-
-
-
-
-
-
-
 ############################Stream_lit Dashboard Part########################
-#Page configuration
+# Page configuration
 file = open("website_title_with_position.json")
 dt = json.load(file)
 st.json(dt)
