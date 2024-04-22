@@ -131,11 +131,11 @@ Total_TF = 0
 TF_Values_tuple = []
 relevancy_valued_dict_2 = {}
 # Calculating TF
-for single_snippet_tuple in snippets_dict.values():
-    for single_statement in single_snippet_tuple:
+for single_snippet_tuple in (snippets_dict.values()):
+    for single_statement in (single_snippet_tuple):
         TF = round(
             (
-                the_all_words_of_tuples_of_snippets.count(single_statement)
+                the_all_words_of_tuples_of_snippets.count((single_statement.lower()))
                 / len(the_all_words_of_tuples_of_snippets)
             ),
             1,
@@ -144,17 +144,16 @@ for single_snippet_tuple in snippets_dict.values():
     TF_Values_tuple.append(Total_TF)
 
 num_of_index = 0
-for key , value in (snippets_dict.items()): #we can put either .keys() or .items()
+for key , value in snippets_dict.items(): #we can put either .keys() or .items()
     temp_key = key
     if temp_key not in relevancy_valued_dict_2:
-            if num_of_index < len(TF_Values_tuple):
-                relevancy_valued_dict_2[temp_key] = TF_Values_tuple[num_of_index]
-                num_of_index += 1 
-    if temp_key in relevancy_valued_dict_2:
-        if num_of_index < len(TF_Values_tuple):
-            relevancy_valued_dict_2[temp_key] += TF_Values_tuple[num_of_index]
-            num_of_index += 1               
+        relevancy_valued_dict_2[temp_key] = TF_Values_tuple[num_of_index]
+        num_of_index += 1
+    elif temp_key in relevancy_valued_dict_2:
+        relevancy_valued_dict_2[temp_key] += TF_Values_tuple[num_of_index]
+        num_of_index += 1
 
+print(relevancy_valued_dict_2)
 print(relevancy_valued_dict_2)
 
 # Converting organic_specific_results dictionary into json
