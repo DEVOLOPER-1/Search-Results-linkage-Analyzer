@@ -184,9 +184,20 @@ G = nx.Graph()
 G.add_nodes_from(nodes_of_relevance_network)
 G.add_edges_from(edges_of_relevance_network)
 plt.title("Relevant Nodes Graph")
-nx.draw(G, with_labels=True , node_shape="o" , node_color= "white" , node_size = 2000 ,font_color="black",width = 5 , style = "solid", edge_color = "darkred", font_size = 10)
+nx.draw(
+    G,
+    with_labels=True,
+    node_shape="o",
+    node_color="white",
+    node_size=2000,
+    font_color="black",
+    width=5,
+    style="solid",
+    edge_color="darkred",
+    font_size=10,
+)
 
 
 plt.axis("off")
 # plt.show()
-plt.savefig("Network Graph.jpeg", format="JPEG",bbox_inches='tight', dpi=1800)
+plt.savefig("Network Graph.jpeg", format="JPEG", bbox_inches="tight", dpi=1800)
