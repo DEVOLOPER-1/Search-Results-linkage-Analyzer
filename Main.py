@@ -140,8 +140,9 @@ for single_snippet_tuple in (snippets_dict.values()):
             ),
             1,
         )
-        Total_TF += round(TF, 1)  # Approximation of TF
+        Total_TF += TF  # Approximation of TF
     TF_Values_tuple.append(Total_TF)
+print(the_all_words_of_tuples_of_snippets)
 
 num_of_index = 0
 for key , value in snippets_dict.items(): #we can put either .keys() or .items()
