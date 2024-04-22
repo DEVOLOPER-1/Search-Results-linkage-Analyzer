@@ -5,10 +5,7 @@ import statistics
 import networkx as nx
 import matplotlib.pyplot as plt
 import os  # I imported this library to check in future for a file that contain api key if it's not found the user will enter api key and saved in running dir and in next runtime the script will extract token from saved file in same directory
-import streamlit as st
-import pandas as pd
-import altair as alt
-import plotly.express as px
+
 
 
 # Create an instance of the class
@@ -132,6 +129,7 @@ TF_Values_tuple = []
 relevancy_valued_dict_2 = {}
 # Calculating TF
 for single_snippet_tuple in snippets_dict.values():
+    Total_TF = 0
     for single_statement in single_snippet_tuple:
         TF = round(
             (
@@ -149,12 +147,12 @@ for key, value in snippets_dict.items():  # we can put either .keys() or .items(
     temp_key = key
     if temp_key not in relevancy_valued_dict_2:
         relevancy_valued_dict_2[temp_key] = TF_Values_tuple[num_of_index]
-        num_of_index += 1
-    elif temp_key in relevancy_valued_dict_2:
+        
+    if temp_key in relevancy_valued_dict_2:
         relevancy_valued_dict_2[temp_key] += TF_Values_tuple[num_of_index]
-        num_of_index += 1
+        
+    num_of_index += 1
 
-print(relevancy_valued_dict_2)
 print(relevancy_valued_dict_2)
 
 # Converting organic_specific_results dictionary into json
@@ -213,7 +211,3 @@ plt.savefig("Network Graph.jpeg", format="JPEG", bbox_inches="tight", dpi=1800)
 
 
 ############################Stream_lit Dashboard Part########################
-# Page configuration
-file = open("website_title_with_position.json")
-dt = json.load(file)
-st.json(dt)
