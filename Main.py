@@ -6,6 +6,8 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import os  # I imported this library to check in future for a file that contain api key if it's not found the user will enter api key and saved in running dir and in next runtime the script will extract token from saved file in same directory
 
+
+# Create an instance of the class
 User_Query = input("Enter your query: ")
 while User_Query == " " or User_Query is None or User_Query == "":
     User_Query = input("Invalid !!  Enter your query: ")
@@ -167,7 +169,7 @@ print(Treshold)
 # Making Network map
 nodes_of_relevance_network = []
 edges_of_relevance_network = []
-G = nx.Graph()
+
 for key, item in relevancy_valued_dict_2.items():
     if item > Treshold:
         nodes_of_relevance_network.append(key)
@@ -177,8 +179,14 @@ for key, item in relevancy_valued_dict_2.items():
             if key != other_key or other_key != key:
                 edges_of_relevance_network.append((key, other_key))
 
+G = nx.Graph()
+
 G.add_nodes_from(nodes_of_relevance_network)
 G.add_edges_from(edges_of_relevance_network)
-nx.draw(G, with_labels=True)
+plt.title("Relevant Nodes Graph")
+nx.draw(G, with_labels=True , node_shape="o" , node_color= "white" , node_size = 2000 ,font_color="black",width = 5 , style = "solid", edge_color = "darkred", font_size = 10)
+
+
+plt.axis("off")
 # plt.show()
-plt.savefig("Network Graph.jpeg", format="JPEG")
+plt.savefig("Network Graph.jpeg", format="JPEG",bbox_inches='tight', dpi=1800)
