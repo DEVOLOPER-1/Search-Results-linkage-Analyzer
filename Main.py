@@ -207,7 +207,7 @@ nx.draw(
 
 plt.axis("off")
 # plt.show()
-plt.savefig("Network Graph.jpeg", format="JPEG", bbox_inches="tight", dpi=1800)
+plt.savefig("Network Graph.jpeg", format="JPEG", bbox_inches="tight", dpi=2400)
 
 
 ############################Stream_lit Dashboard Part########################
