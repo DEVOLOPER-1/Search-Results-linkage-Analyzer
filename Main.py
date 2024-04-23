@@ -210,4 +210,9 @@ plt.axis("off")
 plt.savefig("Network Graph.jpeg", format="JPEG", bbox_inches="tight", dpi=2400)
 
 
-############################Stream_lit Dashboard Part########################
+#Calculating Degree Centrality
+degree_centrality = nx.degree_centrality(G)
+
+#print(degree_centrality)
+with open("degree_centrality_of_network.json", "w") as f:
+    f.write(json.dumps(degree_centrality, indent=4))

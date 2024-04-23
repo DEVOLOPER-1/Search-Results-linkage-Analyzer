@@ -32,20 +32,35 @@ with open("website_title_with_relevancy_values_2.json") as f:
     
 Relevancy_Network_Map = cv2.imread("Network Graph.jpeg")    
 
+with open("degree_centrality_of_network.json") as f:
+    centrality_data = json.load(f)
+
+
+
+
 website_title_with_position_df = pd.DataFrame.from_dict(data, orient="index")
 # table = st.table(website_title_with_position_df) Just for testing purpose and it makes a print function
 website_title_with_relevancy_values_df = pd.DataFrame.from_dict(data_2, orient="index")
 
-st.title("According to your query there are the :green[results] :point_down:")
+Degree_centrality_values_df = pd.DataFrame.from_dict(centrality_data, orient="index")
+
+
+st.title("According to your query here are the :green[results] :point_down:")
+
+# Tabs Objects contains the upcoming  in main Dash Board
+
+
+#Graphs_tab , Charts_tab = st.tabs(["Charts", "Graphs"]) #Not Working
 
 # Column Objects in the main Dash Board
 
-Priority, Relevancy, Network_Graph = st.columns(3)
+Priority, Relevancy, Network_Graph ,Degree_centrality = st.columns(4, gap="large")
 
 # The container of each column
 
 
 # Priority Bar Chart container
+# with Charts_tab:
 with Priority:
     with st.container(border=True):
         st.title("Results :blue[Priority] Chart")
@@ -68,6 +83,7 @@ with Priority:
 
 
 # Relevancy Bar Chart container
+# with Charts_tab:
 with Relevancy:
     with st.container(border=True):
         st.title("Results :blue[Relevancy] Chart")
@@ -90,13 +106,37 @@ with Relevancy:
                 "in the same snippet is summed to make a dictionary at he end from websites names as keys : Relevancy as value ."
             )
             
-            
+# with Graphs_tab:           
 with Network_Graph:
     with st.container(border=True):
         st.title("Network Graph")
-        st.subheader(":violet[Some] nodes have been :red[Eliminated]")
+        st.subheader(":violet[Some] nodes have been :arrow_forward: :red[Eliminated]")
         st.image(Relevancy_Network_Map)
         with st.expander(
             "See explanation"
         ):
-            st.write("The Network Graph is an interactive graph that shows the relationships between the websites. ")
+            st.write("The Network Graph is an interactive graph that" 
+                    "shows the relationships between the websites"
+                    "and some websites are eliminated by comparing"
+                    "the value of each node with a treshold values. ")
+            
+            
+            
+with Degree_centrality:
+    with st.container(border=True):
+        st.title("Results :blue[Priority] Chart")
+        st.subheader(":red[Lower] values :arrow_forward: Higher :green[priority]")
+        st.line_chart(
+            data=Degree_centrality_values_df,
+            use_container_width=True,
+            color="#4F6F52",
+        )
+        with st.expander(
+            "See explanation"
+        ):  # The string Data in st.write() is maintained like mark down
+            st.write("The Degree Centrality of each website is calculated" 
+                    "according to the by counting the number of connections" 
+                    "each website has.  Also you should realize that they are" 
+                    "all equal as the treshold have removed some lower relative results. "
+            )
+
