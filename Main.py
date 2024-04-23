@@ -207,7 +207,7 @@ nx.draw(
 
 plt.axis("off")
 # plt.show()
-plt.savefig("Network Graph.jpeg", format="JPEG", bbox_inches="tight", dpi=2400)
+plt.savefig("Network Graph.jpeg", format="JPEG", bbox_inches="tight", dpi=1900)
 
 
 #Calculating Degree Centrality
@@ -216,3 +216,12 @@ degree_centrality = nx.degree_centrality(G)
 #print(degree_centrality)
 with open("degree_centrality_of_network.json", "w") as f:
     f.write(json.dumps(degree_centrality, indent=4))
+    
+    
+    
+    
+    
+    
+    
+#Launching Dashboard
+os.system('cmd /c "streamlit run Parent_DashBoard.py"')

@@ -54,7 +54,7 @@ st.title("According to your query here are the :green[results] :point_down:")
 
 # Column Objects in the main Dash Board
 
-Priority, Relevancy, Network_Graph ,Degree_centrality = st.columns(4, gap="large")
+Priority, Relevancy, Network_Graph ,Degree_centrality = st.columns(4, gap="medium")
 
 # The container of each column
 
@@ -139,4 +139,7 @@ with Degree_centrality:
                     "each website has.  Also you should realize that they are" 
                     "all equal as the treshold have removed some lower relative results. "
             )
+
+
+#Launching Dashboard
 
