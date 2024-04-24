@@ -35,6 +35,7 @@ Relevancy_Network_Map = cv2.imread("Network Graph.jpeg")
 with open("degree_centrality_of_network.json") as f:
     centrality_data = json.load(f)
 
+Network_Graph_detected_cluster = cv2.imread("Girvan_Newman.jpeg")
 
 
 
@@ -54,7 +55,18 @@ st.title("According to your query here are the :green[results] :point_down:")
 
 # Column Objects in the main Dash Board
 
-Priority, Relevancy, Network_Graph ,Degree_centrality = st.columns(4, gap="medium")
+#Distributing Columns in 2 rows in the DashBoard
+Priority, Relevancy,Degree_centrality = st.columns(3, gap="large")
+Network_Graph , Girvan_new_man = st.columns(2, gap="large")
+with st.container(border=True):
+    Priority.write("")
+    Relevancy.write("")
+    Degree_centrality.write("")
+with st.container(border=True):
+    Network_Graph.write("")
+    Girvan_new_man.write("")
+
+
 
 # The container of each column
 
@@ -67,8 +79,6 @@ with Priority:
         st.subheader(":red[Lower] values :arrow_forward: Higher :green[priority]")
         st.bar_chart(
             data=website_title_with_position_df,
-            width=0,
-            height=0,
             use_container_width=True,
             color="#4F6F52",
         )
@@ -90,8 +100,6 @@ with Relevancy:
         st.subheader(":violet[Higher] values :arrow_forward: Higher :green[Relevancy]")
         st.bar_chart(
             data=website_title_with_relevancy_values_df,
-            width=0,
-            height=0,
             use_container_width=True,
             color="#4F6F52",
         )
@@ -106,7 +114,6 @@ with Relevancy:
                 "in the same snippet is summed to make a dictionary at he end from websites names as keys : Relevancy as value ."
             )
             
-# with Graphs_tab:           
 with Network_Graph:
     with st.container(border=True):
         st.title("Network Graph")
@@ -125,7 +132,7 @@ with Network_Graph:
 with Degree_centrality:
     with st.container(border=True):
         st.title(":blue[Degree Centrality] Chart")
-        st.subheader(":red[Lower] values :arrow_forward: Higher :green[priority]")
+        st.subheader(":red[Higher] values :arrow_forward: Higher :green[Centrality]")
         st.line_chart(
             data=Degree_centrality_values_df,
             use_container_width=True,
@@ -141,6 +148,25 @@ with Degree_centrality:
                     "and all  websites are relevant to each other. "
             )
 
+
+
+
+
+with Girvan_new_man:
+    with st.container(border=True):
+        st.title(":blue[Clustered] Community Graph")
+        st.subheader("It's as same as the Network Graph")
+        st.image(Network_Graph_detected_cluster)
+        with st.expander(
+            "Why do the cluster is the same as the Network Graph ?\n" "See explanation :point_down:"
+        ):
+            st.write("How Does Girvan Newman work ?\n" 
+                    "The idea was to find which edges in a network occur most frequently between " 
+                    "other pairs of nodes by finding edges betweenness centrality."
+                    "The edges joining communities are then expected to have a high edge betweenness."
+                    "The underlying community structure of the network will be much more fine-grained once " 
+                    "the edges with the highest betweenness are eliminated which means that communities will "
+                    "be much easier to spot.")
 
 #Launching Dashboard
 
