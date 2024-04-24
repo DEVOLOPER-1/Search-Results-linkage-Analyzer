@@ -104,7 +104,7 @@ with Priority:
 with Relevancy:
     with st.container(border=True):
         st.title("Results :red[Relevancy] Chart")
-        st.subheader(":violet[Higher] values :arrow_forward: Higher :green[Relevancy]")
+        st.subheader(":red[Higher] values :arrow_forward: Higher :green[Relevancy]")
         st.bar_chart(
             data=website_title_with_relevancy_values_df,
             use_container_width=True,
@@ -149,10 +149,11 @@ with Degree_centrality:
             "See explanation :point_down:"
         ):  # The string Data in st.write() is maintained like mark down
             st.write(
-                "Betweenness centrality measures a node's importance in a network by counting "
-                "how many shortest paths between other nodes pass through it. "
-                "Imagine traffic flowing through a city - a central bridge would "
-                "have high betweenness centrality because many routes use it. "
+                "The Degree Centrality of each website is calculated "
+                "by counting the number of connections "
+                "each website has in the network map.  Also you should realize that they are "
+                "all equal as the treshold have removed some lower relative results "
+                "and all  websites are relevant to each other. "
             )
 
 
@@ -169,18 +170,17 @@ with Betweenness_centrality:
             "See explanation :point_down:"
         ):  # The string Data in st.write() is maintained like mark down
             st.write(
-                "The Degree Centrality of each website is calculated "
-                "by counting the number of connections "
-                "each website has in the network map.  Also you should realize that they are "
-                "all equal as the treshold have removed some lower relative results "
-                "and all  websites are relevant to each other. "
+                "Betweenness centrality measures a node's importance in a network by counting "
+                "how many shortest paths between other nodes pass through it. "
+                "Imagine traffic flowing through a city - a central bridge would "
+                "have high betweenness centrality because many routes use it. "
             )
 
 
 with Girvan_new_man:
     with st.container(border=True):
         st.title(":blue[Clustered] Community Graph")
-        st.subheader("It's as same as the Network Graph")
+        st.subheader("It's :blue[as same as] the Network Graph")
         st.image(Network_Graph_detected_cluster)
         with st.expander(
             "Why do the cluster is the same as the Network Graph ?\n"
