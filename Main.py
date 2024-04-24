@@ -68,43 +68,8 @@ for single_Position in organic_results:
     int_item = single_Position["position"]
     if key not in positions_dict:
         positions_dict[key] = int_item
-
-
-x = 0
-relevancy = 0
-relevancy_values = []
-relevancy_valued_dict = {}
-
-# print(the_all_words_of_tuples_of_snippets)
-
-
-# The process of comparison of each value of key with all values of other key
-# And making a new dic with relevancy values by numbers
-
-for key_of_dict, tuple_value in snippets_dict.items():
-    for word in tuple_value:
-        for single_snippet in the_all_words_of_tuples_of_snippets:
-            if word == single_snippet:
-                x += 1
-    relevancy = x - len(tuple_value)
-    relevancy_values.append(relevancy)
-    if key_of_dict not in relevancy_valued_dict:
-        if relevancy == 0:
-            relevancy_valued_dict[key_of_dict] = relevancy + 1
-        else:
-            relevancy_valued_dict[key_of_dict] = relevancy
-
-print(f"{relevancy_values}\n\n\n")
-print(relevancy_valued_dict)
-print("\n_____________________________________")
-print(relevancy_valued_dict.keys())
-print(snippets_dict.keys())
-for i in organic_results:
-    print("\n_____________________________________")
-    print((i["title"]))
-
-
-# Converting organic_specific_results dictionary into json
+        
+# Converting positions dictionary into json
 website_title_with_position = json.dumps(
     positions_dict, indent=4
 )  # I found that the indent value is to better read the output if printed
@@ -114,6 +79,41 @@ with open("website_title_with_position.json", "w") as f:
     f.write(website_title_with_position)
     print("Done")
 
+
+x = 0
+relevancy = 0
+relevancy_values = []
+relevancy_valued_dict = {}
+
+
+#############################This Part should be revised###########################################################
+
+# The process of comparison of each value of key with all values of other key
+# And making a new dic with relevancy values by numbers
+
+# for key_of_dict, tuple_value in snippets_dict.items():
+#     for word in tuple_value:
+#         for single_snippet in the_all_words_of_tuples_of_snippets:
+#             if word == single_snippet:
+#                 x += 1
+#     relevancy = x - len(tuple_value)
+#     relevancy_values.append(relevancy)
+#     if key_of_dict not in relevancy_valued_dict:
+#         if relevancy == 0:
+#             relevancy_valued_dict[key_of_dict] = relevancy + 1
+#         else:
+#             relevancy_valued_dict[key_of_dict] = relevancy
+
+# print(f"{relevancy_values}\n\n\n")
+# print(relevancy_valued_dict)
+# print("\n_____________________________________")
+# print(relevancy_valued_dict.keys())
+# print(snippets_dict.keys())
+# for i in organic_results:
+#     print("\n_____________________________________")
+#     print((i["title"]))
+
+###################################################################################
 
 # # Converting organic_specific_results dictionary into json
 # website_title_with_relevancy_values = json.dumps(
@@ -156,8 +156,13 @@ for key, value in snippets_dict.items():  # we can put either .keys() or .items(
 
     num_of_index += 1
 
-print(relevancy_valued_dict_2)
-
+#Applying multiple of inverse of position value to relevancy value to make it more relevant to priority results
+for key, value in positions_dict.items():
+    relevancy_valued_dict_2[key]*= (1/value)
+    
+print(relevancy_valued_dict_2)    
+#######################################################
+print(relevancy_valued_dict_2)    
 # Converting organic_specific_results dictionary into json
 website_title_with_relevancy_values_2 = json.dumps(
     relevancy_valued_dict_2, indent=4
@@ -180,14 +185,16 @@ print(Treshold)
 nodes_of_relevance_network = []
 edges_of_relevance_network = []
 
+
+
 for key, item in relevancy_valued_dict_2.items():
-    if item > Treshold:
+    if item > (Treshold * 0.5): #I have multiplied to apply more nodes into network map
         nodes_of_relevance_network.append(key)
         for other_key, other_item in relevancy_valued_dict_2.items():
             if other_item < Treshold:
                 continue
             if key != other_key or other_key != key:
-                edges_of_relevance_network.append((key, other_key))  # weight = 1
+                edges_of_relevance_network.append((key, other_key))  
 
 
 # Un-working logic code as I wanted to make it dynamic and display it in streamlit
@@ -234,7 +241,11 @@ with open("degree_centrality_of_network.json", "w") as f:
     f.write(json.dumps(degree_centrality, indent=4))
 
 
-# Calculating Betweenness centrality is logically useless
+# Calculating Betweenness centrality 
+betweenness_centrality = nx.betweenness_centrality(G)
+with open("betweenness_centrality_of_network.json", "w") as f:
+    f.write(json.dumps(betweenness_centrality, indent=4))
+
 
 # Calculating Community clustering by Girvan_Newman
 Girvan_Newman = girvan_newman(G , most_valuable_edge = None)
