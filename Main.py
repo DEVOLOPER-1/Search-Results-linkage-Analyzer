@@ -5,7 +5,7 @@ import statistics
 import networkx as nx
 import matplotlib.pyplot as plt
 import os  # I imported this library to check in future for a file that contain api key if it's not found the user will enter api key and saved in running dir and in next runtime the script will extract token from saved file in same directory
-
+from networkx.algorithms.community.centrality import girvan_newman
 
 
 # Create an instance of the class
@@ -184,8 +184,22 @@ for key, item in relevancy_valued_dict_2.items():
             if other_item < Treshold:
                 continue
             if key != other_key or other_key != key:
-                edges_of_relevance_network.append((key, other_key))
+                edges_of_relevance_network.append((key, other_key))  #weight = 1
+                
+              
+# Un-working logic code as I wanted to make it dynamic and display it in streamlit
+# network_graph_dict = {}
+# #Making Nodes and edges dictionary for network graph
+# for single_node , single_edge in zip(nodes_of_relevance_network,edges_of_relevance_network):
+#     if single_node not in network_graph_dict:
+#         network_graph_dict[single_node] = single_edge
 
+# #Converting it 2 json 2convert it into a dynamic network map
+# with open("network_graph_dict.json", "w") as f:
+#     f.write(json.dumps(network_graph_dict, indent=4))
+    
+    
+    
 G = nx.Graph()
 
 G.add_nodes_from(nodes_of_relevance_network)
@@ -218,10 +232,21 @@ with open("degree_centrality_of_network.json", "w") as f:
     f.write(json.dumps(degree_centrality, indent=4))
     
     
-    
-    
+#Calculating Betweenness centrality is logically useless
+
+#Calculating Community clustering by Girvan_Newman
+Girvan_Newman = girvan_newman(G)
+Girvan_Newman = tuple(sorted(nx.connected_components(G), key=len, reverse=True))
+plt.savefig("Girvan_Newman.jpeg", format="JPEG", bbox_inches="tight", dpi=1900)
     
     
     
 #Launching Dashboard
 os.system('cmd /c "streamlit run Parent_DashBoard.py"')
+
+
+
+
+
+
+

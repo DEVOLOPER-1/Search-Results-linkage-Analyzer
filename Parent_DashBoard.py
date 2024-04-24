@@ -124,7 +124,7 @@ with Network_Graph:
             
 with Degree_centrality:
     with st.container(border=True):
-        st.title("Results :blue[Priority] Chart")
+        st.title(":blue[Degree Centrality] Chart")
         st.subheader(":red[Lower] values :arrow_forward: Higher :green[priority]")
         st.line_chart(
             data=Degree_centrality_values_df,
@@ -137,7 +137,8 @@ with Degree_centrality:
             st.write("The Degree Centrality of each website is calculated" 
                     "according to the by counting the number of connections" 
                     "each website has.  Also you should realize that they are" 
-                    "all equal as the treshold have removed some lower relative results. "
+                    "all equal as the treshold have removed some lower relative results "
+                    "and all  websites are relevant to each other. "
             )
 
 
