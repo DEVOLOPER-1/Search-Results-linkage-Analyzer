@@ -1,9 +1,9 @@
+# pip install streamlit-option-menu
 import streamlit as st
 import pandas as pd
-import altair as alt
-import plotly.express as px
 import cv2
 import json
+from streamlit_option_menu import option_menu
 
 # Page configuration
 st.set_page_config(
@@ -16,6 +16,9 @@ st.set_page_config(
         "Get help": "https://github.com/DEVOLOPER-1",
     },
 )
+
+st.balloons()
+
 
 st.header(
     "Welcome to :green[Search-Results-linkage-Analyzer]  :wave:", divider="rainbow"
@@ -67,9 +70,9 @@ st.title("According to your query here are the :green[results] :point_down:")
 Priority, Relevancy, Degree_centrality, Betweenness_centrality = st.columns(
     4, gap="small"
 )
-Network_Graph, Girvan_new_man, ThreeD_Network_Map ,Relevancy_heatmap = st.columns(
-    4 , gap="small"
-    )
+Network_Graph, Girvan_new_man, ThreeD_Network_Map, Relevancy_heatmap = st.columns(
+    4, gap="small"
+)
 with st.container(border=True):
     Priority.write("")
     Relevancy.write("")
@@ -131,8 +134,7 @@ with Relevancy:
 
 with Network_Graph:
     with st.container(border=True):
-        st.title(":blue[Relevancy]" "  Network  " 
-                "Graph")
+        st.title(":blue[Relevancy]" "  Network  " "Graph")
         st.subheader(":violet[Some] nodes have been :arrow_forward: :red[Eliminated]")
         st.image(Relevancy_Network_Map)
         with st.expander("See explanation :point_down:"):
@@ -226,4 +228,5 @@ with Relevancy_heatmap:
                 "The Relevancy Heat Map shows the most relevant "
                 "results according to the other results. You will "
                 "realize that as you are reaching the exact value of relevancy "
-                "the color of the result in heat map will be more liter . ")
+                "the color of the result in heat map will be more liter . "
+            )
