@@ -287,8 +287,8 @@ plt.savefig("Heatmap.jpeg", format="JPEG", bbox_inches="tight", dpi=1900)
 # being an array  of the form (node, [x, y, z]) in 3D space
 
 # displaying 3D graph
-fig = plt.figure()
-ax = fig.add_subplot(projection="3d")
+fig2 = plt.figure()
+ax2 = fig2.add_subplot(projection="3d")
 
 # returns a dictionary of positions keyed by each node and the value of each key is [x,y,z]
 x_y_z_position = nx.random_layout(G, dim=3)  # How does random layout work?
@@ -309,24 +309,24 @@ xyz = [list(i) for i in x_y_z_position.values()]  # output = [[x,y,z] , etc.]
 
 
 # displaying 3D graph
-print(len(xyz))
-if len(xyz) > 0:
-    ax.scatter(
-        *zip(*xyz),
-        c="darkred",  # color of marker
-        s=50,  # size of marker
-        marker="x",  # shape of marker
-    )
+# print(len(xyz))
+# if len(xyz) > 0:
+ax2.scatter(
+    *zip(*xyz),
+    c="darkred",  # color of marker
+    s=50,  # size of marker
+    marker="x",  # shape of marker
+)
 
-    ax.plot(*zip(*xyz), c="darkred")
-    ax.title.set_text("3D Network Map Graph")
-    ax.set_xlabel("X")
-    ax.set_ylabel("Y")
-    ax.set_zlabel("Z")
+ax2.plot(*zip(*xyz), c="darkred")
+ax2.title.set_text("3D Network Map Graph")
+ax2.set_xlabel("X")
+ax2.set_ylabel("Y")
+ax2.set_zlabel("Z")
 # saving the 3D figure
-else:
-    print("xyz is empty as the results description are not strongly relevant")
-    plt.savefig("3D Graph.jpeg", format="JPEG", bbox_inches="tight", dpi=1900)
+
+#print("xyz is empty as the results description are not strongly relevant")
+plt.savefig("3D Graph.jpeg", format="JPEG", bbox_inches="tight", dpi=1900)
 
 
 # Launching Dashboard
