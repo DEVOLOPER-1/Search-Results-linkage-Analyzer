@@ -3,7 +3,7 @@ import streamlit as st
 import pandas as pd
 import cv2
 import json
-from streamlit_option_menu import option_menu
+
 
 # Page configuration
 st.set_page_config(
@@ -21,7 +21,8 @@ st.balloons()
 
 
 st.header(
-    "Welcome to :green[Search-Results-linkage-Analyzer]  :wave: (Dont't forget to reach out to us :smile:)", divider="rainbow"
+    "Welcome to :green[Search-Results-linkage-Analyzer]  :wave: (Dont't forget to reach out to us :smile:)",
+    divider="rainbow",
 )
 
 
