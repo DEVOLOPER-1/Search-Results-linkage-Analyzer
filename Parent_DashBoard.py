@@ -42,6 +42,8 @@ with open("betweenness_centrality_of_network.json") as f:
 
 ThreeD_Network_Map_Graph = cv2.imread("3D Graph.jpeg")
 
+Relevancy_heatmap_Graph_Data = cv2.imread("Heatmap.jpeg")
+
 website_title_with_position_df = pd.DataFrame.from_dict(data, orient="index")
 # table = st.table(website_title_with_position_df) Just for testing purpose and it makes a print function
 website_title_with_relevancy_values_df = pd.DataFrame.from_dict(data_2, orient="index")
@@ -65,7 +67,9 @@ st.title("According to your query here are the :green[results] :point_down:")
 Priority, Relevancy, Degree_centrality, Betweenness_centrality = st.columns(
     4, gap="small"
 )
-Network_Graph, Girvan_new_man, ThreeD_Network_Map = st.columns(3, gap="small")
+Network_Graph, Girvan_new_man, ThreeD_Network_Map ,Relevancy_heatmap = st.columns(
+    4 , gap="small"
+    )
 with st.container(border=True):
     Priority.write("")
     Relevancy.write("")
@@ -75,6 +79,7 @@ with st.container(border=True):
     Network_Graph.write("")
     Girvan_new_man.write("")
     ThreeD_Network_Map.write("")
+    Relevancy_heatmap.write("")
 
 
 # The container of each column
@@ -126,7 +131,8 @@ with Relevancy:
 
 with Network_Graph:
     with st.container(border=True):
-        st.title(":blue[Relevancy]Network Graph")
+        st.title(":blue[Relevancy]" "  Network  " 
+                "Graph")
         st.subheader(":violet[Some] nodes have been :arrow_forward: :red[Eliminated]")
         st.image(Relevancy_Network_Map)
         with st.expander("See explanation :point_down:"):
@@ -201,7 +207,7 @@ with Girvan_new_man:
 with ThreeD_Network_Map:
     with st.container(border=True):
         st.title(":blue[3D] Network Map")
-        st.subheader(":violet[Based on] the Network Graph")
+        st.subheader(":violet[Based on] Relevancy Network Graph")
         st.image(ThreeD_Network_Map_Graph)
         with st.expander("See explanation :point_down:"):
             st.write(
@@ -210,4 +216,14 @@ with ThreeD_Network_Map:
             )
 
 
-# Launching Dashboard
+with Relevancy_heatmap:
+    with st.container(border=True):
+        st.title(":blue[Relevancy] Heat Map")
+        st.subheader(":violet[Based on] the Relevancy Values")
+        st.image(Relevancy_heatmap_Graph_Data)
+        with st.expander("See explanation :point_down:"):
+            st.write(
+                "The Relevancy Heat Map shows the most relevant "
+                "results according to the other results. You will "
+                "realize that as you are reaching the exact value of relevancy "
+                "the color of the result in heat map will be more liter . ")

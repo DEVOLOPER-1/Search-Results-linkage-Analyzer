@@ -1,9 +1,20 @@
 {
     "cSpell.words": [
+        "arange",
+        "asit",
+        "cmap",
+        "colorbar",
+        "fontsize",
         "girvan",
         "Girvan",
+        "gradiency",
+        "imshow",
         "xlabel",
+        "xticklabels",
+        "xticks",
         "ylabel",
+        "yticklabels",
+        "yticks",
         "zlabel"
     ]
 }

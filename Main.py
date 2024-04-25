@@ -6,7 +6,7 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import os  # I imported this library to check in future for a file that contain api key if it's not found the user will enter api key and saved in running dir and in next runtime the script will extract token from saved file in same directory
 from networkx.algorithms.community.centrality import girvan_newman
-
+import numpy as np
 
 # I should make a condition to force the user to enter 3 words at least
 # Create an instance of the class
@@ -257,6 +257,26 @@ plt.savefig("Girvan_Newman.jpeg", format="JPEG", bbox_inches="tight", dpi=1900)
 
 # Heat Mapping
 
+x_axis_int_values = [num for num in range(len(relevancy_valued_dict_2.keys()))]
+y_axis_values = [y for y in relevancy_valued_dict_2.values()]
+print(x_axis_int_values)
+x_axis_string_values = [str(key) for key in relevancy_valued_dict_2.keys()]
+
+
+combined_Matrix = np.array([x_axis_int_values, y_axis_values]).T
+
+fig = plt.figure("Heat Map of Relevancy Values")
+ax = fig.add_subplot()
+cat = ax.matshow(
+    combined_Matrix, interpolation="bicubic"
+)  # As I have tested interpolation  = nearest or bilinear or bicubic I saw the change in the gradiency of colors on heat map asit affects how colors are smoothed together
+fig.colorbar(cat)
+# ax.set_xticks(np.arange(len(x_axis_int_values)))
+# ax.set_yticks(np.arange(len(y_axis_values)))
+ax.set_xticklabels(x_axis_string_values, rotation=90, fontsize="x-small")
+ax.set_yticklabels(y_axis_values, fontsize="x-small")
+plt.savefig("Heatmap.jpeg", format="JPEG", bbox_inches="tight", dpi=1900)
+
 
 # Making 3d graph map
 
@@ -297,7 +317,7 @@ if len(xyz) > 0:
         s=50,  # size of marker
         marker="x",  # shape of marker
     )
-    
+
     ax.plot(*zip(*xyz), c="darkred")
     ax.title.set_text("3D Network Map Graph")
     ax.set_xlabel("X")
