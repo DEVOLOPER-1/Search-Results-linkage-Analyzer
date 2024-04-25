@@ -21,7 +21,7 @@ st.balloons()
 
 
 st.header(
-    "Welcome to :green[Search-Results-linkage-Analyzer]  :wave:", divider="rainbow"
+    "Welcome to :green[Search-Results-linkage-Analyzer]  :wave: (Dont't forget to reach out to us :smile:)", divider="rainbow"
 )
 
 
