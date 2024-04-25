@@ -8,7 +8,7 @@ import os  # I imported this library to check in future for a file that contain 
 from networkx.algorithms.community.centrality import girvan_newman
 
 
-#I should make a condition to force the user to enter 3 words at least
+# I should make a condition to force the user to enter 3 words at least
 # Create an instance of the class
 User_Query = input("Enter your query: ")
 while (
@@ -69,7 +69,7 @@ for single_Position in organic_results:
     int_item = single_Position["position"]
     if key not in positions_dict:
         positions_dict[key] = int_item
-        
+
 # Converting positions dictionary into json
 website_title_with_position = json.dumps(
     positions_dict, indent=4
@@ -148,7 +148,7 @@ print(the_all_words_of_tuples_of_snippets)
 num_of_index = 0
 for key, value in snippets_dict.items():  # we can put either .keys() or .items()
     temp_key = key
-    
+
     if temp_key not in relevancy_valued_dict_2:
         relevancy_valued_dict_2[temp_key] = TF_Values_tuple[num_of_index]
 
@@ -157,13 +157,13 @@ for key, value in snippets_dict.items():  # we can put either .keys() or .items(
 
     num_of_index += 1
 
-#Applying multiple of inverse of position value to relevancy value to make it more relevant to priority results
+# Applying multiple of inverse of position value to relevancy value to make it more relevant to priority results
 for key, value in positions_dict.items():
-    relevancy_valued_dict_2[key]*= (1/value)
-    
-print(relevancy_valued_dict_2)    
+    relevancy_valued_dict_2[key] *= 1 / value
+
+print(relevancy_valued_dict_2)
 #######################################################
-print(relevancy_valued_dict_2)    
+print(relevancy_valued_dict_2)
 # Converting organic_specific_results dictionary into json
 website_title_with_relevancy_values_2 = json.dumps(
     relevancy_valued_dict_2, indent=4
@@ -187,15 +187,16 @@ nodes_of_relevance_network = []
 edges_of_relevance_network = []
 
 
-
 for key, item in relevancy_valued_dict_2.items():
-    if item > (Treshold * 0.5): #I have multiplied to apply more nodes into network map
+    if item > (
+        Treshold * 0.5
+    ):  # I have multiplied to apply more nodes into network map
         nodes_of_relevance_network.append(key)
         for other_key, other_item in relevancy_valued_dict_2.items():
             if other_item < Treshold:
                 continue
             if key != other_key or other_key != key:
-                edges_of_relevance_network.append((key, other_key))  
+                edges_of_relevance_network.append((key, other_key))
 
 
 # Un-working logic code as I wanted to make it dynamic and display it in streamlit
@@ -242,46 +243,38 @@ with open("degree_centrality_of_network.json", "w") as f:
     f.write(json.dumps(degree_centrality, indent=4))
 
 
-# Calculating Betweenness centrality 
+# Calculating Betweenness centrality
 betweenness_centrality = nx.betweenness_centrality(G)
 with open("betweenness_centrality_of_network.json", "w") as f:
     f.write(json.dumps(betweenness_centrality, indent=4))
 
 
 # Calculating Community clustering by Girvan_Newman
-Girvan_Newman = girvan_newman(G , most_valuable_edge = None)
+Girvan_Newman = girvan_newman(G, most_valuable_edge=None)
 plt.title("Community Clustering by Girvan_Newman")
 plt.savefig("Girvan_Newman.jpeg", format="JPEG", bbox_inches="tight", dpi=1900)
 
 
-#Heat Mapping
+# Heat Mapping
 
 
+# Making 3d graph map
 
 
-
-
-
-
-
-
-#Making 3d graph map
-
-
-#A layout is an algorithm to position nodes in a graph
+# A layout is an algorithm to position nodes in a graph
 #  #makes a 3D graph
-#Layouts returns a dictionary , with each element 
-#being an array  of the form (node, [x, y, z]) in 3D space
+# Layouts returns a dictionary , with each element
+# being an array  of the form (node, [x, y, z]) in 3D space
 
-#displaying 3D graph
+# displaying 3D graph
 fig = plt.figure()
 ax = fig.add_subplot(projection="3d")
 
-#returns a dictionary of positions keyed by each node and the value of each key is [x,y,z]
-x_y_z_position = nx.random_layout(G, dim = 3) #How does random layout work?
+# returns a dictionary of positions keyed by each node and the value of each key is [x,y,z]
+x_y_z_position = nx.random_layout(G, dim=3)  # How does random layout work?
 
-#converting each dictionary value into 1x3 array and appending it to a list
-xyz = [list(i) for i in x_y_z_position.values()] #output = [[x,y,z] , etc.]
+# converting each dictionary value into 1x3 array and appending it to a list
+xyz = [list(i) for i in x_y_z_position.values()]  # output = [[x,y,z] , etc.]
 
 
 ##################Not working code  as i used it in ax.scatter(x = X , y = Y , z = Z)
@@ -293,18 +286,16 @@ xyz = [list(i) for i in x_y_z_position.values()] #output = [[x,y,z] , etc.]
 #     X.append(array[num_of_array][0])
 #     Y.append(array[num_of_array][1])
 #     Z.append(array[num_of_array][2])
-    
-    
-#displaying 3D graph
+
+
+# displaying 3D graph
 print(len(xyz))
 if len(xyz) > 0:
     ax.scatter(
         *zip(*xyz),
-        c = "darkred", #color of marker
-        s = 50, #size of marker
-        marker="x", #shape of marker
-        edgecolors= "none"
-        
+        c="darkred",  # color of marker
+        s=50,  # size of marker
+        marker="x",  # shape of marker
     )
 else:
     print("xyz is empty as the results description are not strongly relevant")
@@ -314,7 +305,7 @@ ax.title.set_text("3D Network Map Graph")
 ax.set_xlabel("X")
 ax.set_ylabel("Y")
 ax.set_zlabel("Z")
-#saving the 3D figure
+# saving the 3D figure
 plt.savefig("3D Graph.jpeg", format="JPEG", bbox_inches="tight", dpi=1900)
 
 

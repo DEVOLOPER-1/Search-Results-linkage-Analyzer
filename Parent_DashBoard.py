@@ -65,7 +65,7 @@ st.title("According to your query here are the :green[results] :point_down:")
 Priority, Relevancy, Degree_centrality, Betweenness_centrality = st.columns(
     4, gap="small"
 )
-Network_Graph, Girvan_new_man , ThreeD_Network_Map = st.columns(3, gap="small")
+Network_Graph, Girvan_new_man, ThreeD_Network_Map = st.columns(3, gap="small")
 with st.container(border=True):
     Priority.write("")
     Relevancy.write("")
@@ -84,7 +84,7 @@ with st.container(border=True):
 # with Charts_tab:
 with Priority:
     with st.container(border=True):
-        st.title("Results :blue[Priority] Chart")
+        st.title("Results :red[Priority] Chart")
         st.subheader(":red[Lower] values :arrow_forward: Higher :green[priority]")
         st.bar_chart(
             data=website_title_with_position_df,
@@ -203,16 +203,11 @@ with ThreeD_Network_Map:
         st.title(":blue[3D] Network Map")
         st.subheader(":violet[Based on] the Network Graph")
         st.image(ThreeD_Network_Map_Graph)
-        with st.expander(
-            "See explanation :point_down:"
-        ):
-            st.write(""
-
+        with st.expander("See explanation :point_down:"):
+            st.write(
+                "For every node, a position is generated randomly by choosing each of dim "
+                "coordinates uniformly at random on the interval [0.0, 1.0). "
             )
-
-
-
-
 
 
 # Launching Dashboard
