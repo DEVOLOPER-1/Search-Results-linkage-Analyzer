@@ -297,16 +297,16 @@ if len(xyz) > 0:
         s=50,  # size of marker
         marker="x",  # shape of marker
     )
+    
+    ax.plot(*zip(*xyz), c="darkred")
+    ax.title.set_text("3D Network Map Graph")
+    ax.set_xlabel("X")
+    ax.set_ylabel("Y")
+    ax.set_zlabel("Z")
+# saving the 3D figure
 else:
     print("xyz is empty as the results description are not strongly relevant")
-
-ax.plot(*zip(*xyz), c="darkred")
-ax.title.set_text("3D Network Map Graph")
-ax.set_xlabel("X")
-ax.set_ylabel("Y")
-ax.set_zlabel("Z")
-# saving the 3D figure
-plt.savefig("3D Graph.jpeg", format="JPEG", bbox_inches="tight", dpi=1900)
+    plt.savefig("3D Graph.jpeg", format="JPEG", bbox_inches="tight", dpi=1900)
 
 
 # Launching Dashboard
