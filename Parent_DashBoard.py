@@ -40,6 +40,7 @@ Network_Graph_detected_cluster = cv2.imread("Girvan_Newman.jpeg")
 with open("betweenness_centrality_of_network.json") as f:
     betweenness_data = json.load(f)
 
+ThreeD_Network_Map_Graph = cv2.imread("3D Graph.jpeg")
 
 website_title_with_position_df = pd.DataFrame.from_dict(data, orient="index")
 # table = st.table(website_title_with_position_df) Just for testing purpose and it makes a print function
@@ -64,7 +65,7 @@ st.title("According to your query here are the :green[results] :point_down:")
 Priority, Relevancy, Degree_centrality, Betweenness_centrality = st.columns(
     4, gap="small"
 )
-Network_Graph, Girvan_new_man = st.columns(2, gap="small")
+Network_Graph, Girvan_new_man , ThreeD_Network_Map = st.columns(3, gap="small")
 with st.container(border=True):
     Priority.write("")
     Relevancy.write("")
@@ -73,6 +74,7 @@ with st.container(border=True):
 with st.container(border=True):
     Network_Graph.write("")
     Girvan_new_man.write("")
+    ThreeD_Network_Map.write("")
 
 
 # The container of each column
@@ -124,7 +126,7 @@ with Relevancy:
 
 with Network_Graph:
     with st.container(border=True):
-        st.title("Network Graph")
+        st.title(":blue[Relevancy]Network Graph")
         st.subheader(":violet[Some] nodes have been :arrow_forward: :red[Eliminated]")
         st.image(Relevancy_Network_Map)
         with st.expander("See explanation :point_down:"):
@@ -180,7 +182,7 @@ with Betweenness_centrality:
 with Girvan_new_man:
     with st.container(border=True):
         st.title(":blue[Clustered] Community Graph")
-        st.subheader("It's :blue[as same as] the Network Graph")
+        st.subheader("It's :violet[as same as] the Network Graph")
         st.image(Network_Graph_detected_cluster)
         with st.expander(
             "Why do the cluster is the same as the Network Graph ?\n"
@@ -195,5 +197,22 @@ with Girvan_new_man:
                 "the edges with the highest betweenness are eliminated which means that communities will "
                 "be much easier to spot."
             )
+
+with ThreeD_Network_Map:
+    with st.container(border=True):
+        st.title(":blue[3D] Network Map")
+        st.subheader(":violet[Based on] the Network Graph")
+        st.image(ThreeD_Network_Map_Graph)
+        with st.expander(
+            "See explanation :point_down:"
+        ):
+            st.write(""
+
+            )
+
+
+
+
+
 
 # Launching Dashboard

@@ -277,7 +277,7 @@ plt.savefig("Girvan_Newman.jpeg", format="JPEG", bbox_inches="tight", dpi=1900)
 fig = plt.figure()
 ax = fig.add_subplot(projection="3d")
 
-#returns a dictionary of positions keyed by each node
+#returns a dictionary of positions keyed by each node and the value of each key is [x,y,z]
 x_y_z_position = nx.random_layout(G, dim = 3) #How does random layout work?
 
 #converting each dictionary value into 1x3 array and appending it to a list
