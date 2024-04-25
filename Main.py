@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 import os  # I imported this library to check in future for a file that contain api key if it's not found the user will enter api key and saved in running dir and in next runtime the script will extract token from saved file in same directory
 from networkx.algorithms.community.centrality import girvan_newman
 
+
 #I should make a condition to force the user to enter 3 words at least
 # Create an instance of the class
 User_Query = input("Enter your query: ")
@@ -249,6 +250,7 @@ with open("betweenness_centrality_of_network.json", "w") as f:
 
 # Calculating Community clustering by Girvan_Newman
 Girvan_Newman = girvan_newman(G , most_valuable_edge = None)
+plt.title("Community Clustering by Girvan_Newman")
 plt.savefig("Girvan_Newman.jpeg", format="JPEG", bbox_inches="tight", dpi=1900)
 
 
@@ -262,6 +264,58 @@ plt.savefig("Girvan_Newman.jpeg", format="JPEG", bbox_inches="tight", dpi=1900)
 
 
 
+
+#Making 3d graph map
+
+
+#A layout is an algorithm to position nodes in a graph
+#  #makes a 3D graph
+#Layouts returns a dictionary , with each element 
+#being an array  of the form (node, [x, y, z]) in 3D space
+
+#displaying 3D graph
+fig = plt.figure()
+ax = fig.add_subplot(projection="3d")
+
+#returns a dictionary of positions keyed by each node
+x_y_z_position = nx.random_layout(G, dim = 3) #How does random layout work?
+
+#converting each dictionary value into 1x3 array and appending it to a list
+xyz = [list(i) for i in x_y_z_position.values()] #output = [[x,y,z] , etc.]
+
+
+##################Not working code  as i used it in ax.scatter(x = X , y = Y , z = Z)
+# X = []
+# Y = []
+# Z = []
+# print(xyz)
+# for num_of_array , array in enumerate(xyz):
+#     X.append(array[num_of_array][0])
+#     Y.append(array[num_of_array][1])
+#     Z.append(array[num_of_array][2])
+    
+    
+#displaying 3D graph
+print(len(xyz))
+if len(xyz) > 0:
+    ax.scatter(
+        *zip(*xyz),
+        c = "darkred", #color of marker
+        s = 50, #size of marker
+        marker="x", #shape of marker
+        edgecolors= "none"
+        
+    )
+else:
+    print("xyz is empty as the results description are not strongly relevant")
+
+ax.plot(*zip(*xyz), c="darkred")
+ax.title.set_text("3D Network Map Graph")
+ax.set_xlabel("X")
+ax.set_ylabel("Y")
+ax.set_zlabel("Z")
+#saving the 3D figure
+plt.savefig("3D Graph.jpeg", format="JPEG", bbox_inches="tight", dpi=1900)
 
 
 # Launching Dashboard
