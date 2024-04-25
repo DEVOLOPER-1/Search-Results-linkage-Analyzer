@@ -18,16 +18,10 @@ while (
 ):
     User_Query = input("Invalid !!  Enter your query: ")
 
-while (
-    User_Api == " " or User_Api is None or User_Api == "" or User_Api == "   "
-):
+while User_Api == " " or User_Api is None or User_Api == "" or User_Api == "   ":
     User_Api = input("Invalid !!  Enter your query: ")
 
-params = {
-    "engine": "google",
-    "q": User_Query,
-    "api_key": User_Api
-}
+params = {"engine": "google", "q": User_Query, "api_key": User_Api}
 
 
 search = GoogleSearch(params)
@@ -332,7 +326,7 @@ ax2.set_ylabel("Y")
 ax2.set_zlabel("Z")
 # saving the 3D figure
 
-#print("xyz is empty as the results description are not strongly relevant")
+# print("xyz is empty as the results description are not strongly relevant")
 plt.savefig("3D Graph.jpeg", format="JPEG", bbox_inches="tight", dpi=1900)
 
 
