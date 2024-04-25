@@ -9,17 +9,24 @@ from networkx.algorithms.community.centrality import girvan_newman
 import numpy as np
 
 # I should make a condition to force the user to enter 3 words at least
-# Create an instance of the class
+
+
 User_Query = input("Enter your query: ")
+User_Api = input("Enter your api key: ")
 while (
     User_Query == " " or User_Query is None or User_Query == "" or User_Query == "   "
 ):
     User_Query = input("Invalid !!  Enter your query: ")
 
+while (
+    User_Api == " " or User_Api is None or User_Api == "" or User_Api == "   "
+):
+    User_Api = input("Invalid !!  Enter your query: ")
+
 params = {
     "engine": "google",
     "q": User_Query,
-    "api_key": "714b25eb147b43b3885fabb755c6a3682a48533965aaa15ed6b2a8492aff3a8e",
+    "api_key": User_Api
 }
 
 
