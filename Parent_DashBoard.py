@@ -222,7 +222,7 @@ with ThreeD_Network_Map:
 with Relevancy_heatmap:
     with st.container(border=True):
         st.title(":blue[Relevancy] Heat Map")
-        st.subheader(":violet[Based on] the Relevancy Values")
+        st.subheader(":violet[Based on] the :red[most High] Relevancy Values")
         st.image(Relevancy_heatmap_Graph_Data)
         with st.expander("See explanation :point_down:"):
             st.write(
