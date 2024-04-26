@@ -3,7 +3,7 @@ import streamlit as st
 import pandas as pd
 import cv2
 import json
-
+import os
 
 # Page configuration
 st.set_page_config(
@@ -231,3 +231,15 @@ with Relevancy_heatmap:
                 "realize that as you are reaching the exact value of relevancy "
                 "the color of the result in heat map will be more liter . "
             )
+
+
+# Entering another query or closing the program
+new_program = input("Enter another query ? [y/n] : ").lower().strip()
+
+while new_program != "y" or new_program != "n":
+    close_program = input("Invalid !! Do you want to Enter another query ? [y/n] : ")
+if new_program == "y":
+    os.system('cmd /c "run Main.py"')
+if new_program == "n":
+    st.success("Closing ....")
+    st.stop()
