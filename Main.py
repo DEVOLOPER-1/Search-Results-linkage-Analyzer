@@ -10,6 +10,7 @@ import numpy as np
 
 # I should make a condition to force the user to enter 3 words at least
 
+serp_api_sample = "714b25eb147b43b3885fabb755c6a3682a48533965aaa15ed6b2a8492aff3a8e"
 
 User_Query = input("Enter your query: ")
 User_Api = input("Enter your api key: ")
@@ -18,8 +19,8 @@ while (
 ):
     User_Query = input("Invalid !!  Enter your query: ")
 
-while User_Api == " " or User_Api is None or User_Api == "" or User_Api == "   ":
-    User_Api = input("Invalid !!  Enter your query: ")
+while len(User_Api) != len(serp_api_sample):
+    User_Api = input("Invalid !!  Enter your correct api key: ")
 
 params = {"engine": "google", "q": User_Query, "api_key": User_Api}
 
