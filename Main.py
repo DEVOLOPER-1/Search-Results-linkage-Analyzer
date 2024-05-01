@@ -14,7 +14,7 @@ import PySimpleGUI as sg
 
 # All the stuff inside your window.
 layout = [
-    [sg.Text("Enter your Quey", background_color="black", text_color="white")],
+    [sg.Text("Enter your Query", background_color="black", text_color="white")],
     [sg.InputText()],
     [sg.Text("Enter SERP API key", background_color="black", text_color="white")],
     [sg.InputText()],
