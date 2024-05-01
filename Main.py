@@ -7,22 +7,58 @@ import matplotlib.pyplot as plt
 import os  # I imported this library to check in future for a file that contain api key if it's not found the user will enter api key and saved in running dir and in next runtime the script will extract token from saved file in same directory
 from networkx.algorithms.community.centrality import girvan_newman
 import numpy as np
+import PySimpleGUI as sg
 
 
 # I should make a condition to force the user to enter 3 words at least
 
+# All the stuff inside your window.
+layout = [
+    [sg.Text("Enter your Quey" , background_color = "black" , text_color = "white")],
+    [sg.InputText()],
+    [sg.Text("Enter SERP API key" , background_color = "black" , text_color = "white")],
+    [sg.InputText()],
+    [sg.Button("Display Results in Dashboard" , button_color = "black" ), sg.Button("Cancel", button_color = "black")],
+]
+
+# Create the Window
+sg.theme('DarkBlack')
+window = sg.Window("Search Results linkage Analyzer", 
+                layout ,
+                icon = r"C:\Users\moham\OneDrive\Desktop\DAQ-103 Project\GUI Resources\icons8-bar-chart-100.ico",
+                resizable = True)
+
+# Event Loop to process "events" and get the "values" of the inputs
+
+event, values = window.read()
+
+    # if user closes window or clicks cancel
+if event == sg.WIN_CLOSED or event == "Cancel":
+        window.close()
+
+print("Hello", values[1], "!")
+
+
 
 serp_api_sample = "714b25eb147b43b3885fabb755c6a3682a48533965aaa15ed6b2a8492aff3a8e"
 
-User_Query = input("Enter your query: ")
-User_Api = input("Enter your api key: ")
+User_Query = values[0]
+User_Api = values[1]
+print(User_Query, User_Api)
 while (
     User_Query == " " or User_Query is None or User_Query == "" or User_Query == "   "
-):
-    User_Query = input("Invalid !!  Enter your query: ")
-
-while len(User_Api) != len(serp_api_sample):
-    User_Api = input("Invalid !!  Enter your correct api key: ")
+    and event != "Cancel" ) :
+    User_Query = sg.popup_get_text('Invalid Entry!! Please Enter Your Query' , title="Invalid Query Entry" , icon = r"C:\Users\moham\OneDrive\Desktop\DAQ-103 Project\GUI Resources\icons8-bar-chart-100.ico")
+    event, values = window.read()
+    if event == sg.WIN_CLOSED or event == "Cancel":
+        window.close()
+        break
+while ((len(User_Api) != len (serp_api_sample)) and event != "Cancel"):
+    User_Api = sg.popup_get_text('Invalid Entry!! Please Enter Your API Key',title="Invalid SERP API Key Entry" , icon = r"C:\Users\moham\OneDrive\Desktop\DAQ-103 Project\GUI Resources\icons8-bar-chart-100.ico")
+    event, values = window.read()
+    if event == sg.WIN_CLOSED or event == "Cancel":
+        window.close()
+        break
 
 params = {"engine": "google", "q": User_Query, "api_key": User_Api}
 
@@ -196,12 +232,12 @@ for key, item in relevancy_valued_dict_2.items():
         Treshold * 0.5
     ):  # I have multiplied to apply more nodes into network map
         nodes_of_relevance_network.append(key)
-        for other_key, other_item in relevancy_valued_dict_2.items():
-            if other_item < Treshold:
-                continue
-            if key != other_key or other_key != key:
-                edges_of_relevance_network.append((key, other_key))
-
+        
+#Making Edges and appending them 2 edges_of_relevance_network
+for  single_node in nodes_of_relevance_network:
+    for other_node in nodes_of_relevance_network:
+        if single_node != other_node:
+            edges_of_relevance_network.append((single_node,other_node))
 
 # Un-working logic code as I wanted to make it dynamic and display it in streamlit
 # network_graph_dict = {}
@@ -334,4 +370,10 @@ plt.savefig("3D Graph.jpeg", format="JPEG", bbox_inches="tight", dpi=1900)
 
 
 # Launching Dashboard
-os.system('cmd /c "streamlit run Parent_DashBoard.py"')
+if event == "Display Results in Dashboard":
+    window.close()
+    os.system('cmd /c "streamlit run Parent_DashBoard.py"')
+if event == "Cancel" or event == sg.WIN_CLOSED:
+    window.close()
+    exit()
+
