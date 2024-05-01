@@ -7,9 +7,53 @@ import matplotlib.pyplot as plt
 import os  # I imported this library to check in future for a file that contain api key if it's not found the user will enter api key and saved in running dir and in next runtime the script will extract token from saved file in same directory
 from networkx.algorithms.community.centrality import girvan_newman
 import numpy as np
+from kivy.app import App
+from kivy.uix.gridlayout import GridLayout
+from kivy.uix.label import Label
+from kivy.uix.image import Image
+from kivy.uix.button import Button
+from kivy.uix.textinput import TextInput
+
 
 # I should make a condition to force the user to enter 3 words at least
+class MainApp(App):
+    def build(self):
+        self.title = "Search Results Linkage Analyzer"
+        self.window = GridLayout()
+        self.window.cols = 1
+        self.greetings = Label(
+            text="Welcome To S.R.L.A",
+            font_size=50,
+            bold=True,
+        )
+        self.window.add_widget(
+            Image(
+                source=r"C:\Users\moham\OneDrive\Desktop\DAQ-103 Project\GUI Resources\—Pngtree—vector graph icon_4946360.png"
+            )
+        )
+        self.user_query = TextInput(
+            text="Enter your query here \nEnter Below your secret api key",
+            multiline=True,
+            
+        )
+        self.user_api = TextInput(
+            text="Enter your api key here",
+            multiline=True,
+            password=True,
+            password_mask="#/*\#"
+        )
+        
+        self.button = Button(text="Analyze", bold=True)
+        self.window.add_widget(self.greetings)
+        self.window.add_widget(self.user_query)
+        self.window.add_widget(self.user_api)
+        self.window.add_widget(self.button)
 
+        # The r in source means the string is treated as a raw string, which means that backslashes in the string will not be escaped.
+        return self.window
+
+
+MainApp().run()
 serp_api_sample = "714b25eb147b43b3885fabb755c6a3682a48533965aaa15ed6b2a8492aff3a8e"
 
 User_Query = input("Enter your query: ")
