@@ -35,19 +35,24 @@ with open("website_title_with_relevancy_values_2.json") as f:
     data_2 = json.load(f)
 
 Relevancy_Network_Map = cv2.imread("Network Graph.jpeg")
-
+Relevancy_Network_Map = cv2.cvtColor(Relevancy_Network_Map, cv2.COLOR_BGR2RGB)
 with open("degree_centrality_of_network.json") as f:
     centrality_data = json.load(f)
 
 Network_Graph_detected_cluster = cv2.imread("Girvan_Newman.jpeg")
-
+Network_Graph_detected_cluster = cv2.cvtColor(
+    Network_Graph_detected_cluster, cv2.COLOR_BGR2RGB
+)
 with open("betweenness_centrality_of_network.json") as f:
     betweenness_data = json.load(f)
 
 ThreeD_Network_Map_Graph = cv2.imread("3D Graph.jpeg")
+ThreeD_Network_Map_Graph = cv2.cvtColor(ThreeD_Network_Map_Graph, cv2.COLOR_BGR2RGB)
 
 Relevancy_heatmap_Graph_Data = cv2.imread("Heatmap.jpeg")
-
+Relevancy_heatmap_Graph_Data = cv2.cvtColor(
+    Relevancy_heatmap_Graph_Data, cv2.COLOR_BGR2RGB
+)
 website_title_with_position_df = pd.DataFrame.from_dict(data, orient="index")
 # table = st.table(website_title_with_position_df) Just for testing purpose and it makes a print function
 website_title_with_relevancy_values_df = pd.DataFrame.from_dict(data_2, orient="index")
@@ -231,6 +236,3 @@ with Relevancy_heatmap:
                 "realize that as you are reaching the exact value of relevancy "
                 "the color of the result in heat map will be more liter . "
             )
-
-
-
