@@ -87,7 +87,6 @@ Priority, Relevancy, Degree_centrality, Betweenness_centrality = st.columns(
 Network_Graph, Girvan_new_man, ThreeD_Network_Map, Relevancy_heatmap = st.columns(
     4, gap="small"
 )
-relevant_results__links = st.columns(1)
 with st.container(border=True):
     Priority.write("")
     Relevancy.write("")
