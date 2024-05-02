@@ -46,6 +46,10 @@ Network_Graph_detected_cluster = cv2.cvtColor(
 with open("betweenness_centrality_of_network.json") as f:
     betweenness_data = json.load(f)
 
+
+with open("relevant_results_with_links.json") as f:
+    relevant_results_with_links_data = json.load(f)
+
 ThreeD_Network_Map_Graph = cv2.imread("3D Graph.jpeg")
 ThreeD_Network_Map_Graph = cv2.cvtColor(ThreeD_Network_Map_Graph, cv2.COLOR_BGR2RGB)
 
@@ -61,6 +65,10 @@ Degree_centrality_values_df = pd.DataFrame.from_dict(centrality_data, orient="in
 
 Betweenness_centrality_values_df = pd.DataFrame.from_dict(
     betweenness_data, orient="index"
+)
+
+relevant_results_with_links_data_df = pd.DataFrame.from_dict(
+    relevant_results_with_links_data, orient="index"
 )
 
 st.title("According to your query here are the :green[results] :point_down:")
@@ -79,6 +87,7 @@ Priority, Relevancy, Degree_centrality, Betweenness_centrality = st.columns(
 Network_Graph, Girvan_new_man, ThreeD_Network_Map, Relevancy_heatmap = st.columns(
     4, gap="small"
 )
+relevant_results__links = st.columns(1)
 with st.container(border=True):
     Priority.write("")
     Relevancy.write("")
@@ -89,7 +98,6 @@ with st.container(border=True):
     Girvan_new_man.write("")
     ThreeD_Network_Map.write("")
     Relevancy_heatmap.write("")
-
 
 # The container of each column
 
@@ -236,3 +244,9 @@ with Relevancy_heatmap:
                 "realize that as you are reaching the exact value of relevancy "
                 "the color of the result in heat map will be more liter . "
             )
+
+
+with st.container(border=True):
+    st.title(":blue[Relevant Results] Links")
+    st.subheader(":violet[Based on] the :red[most High] Relevancy Values")
+    st.dataframe(relevant_results_with_links_data_df)

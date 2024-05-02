@@ -339,7 +339,7 @@ combined_Matrix = np.array([x_axis_int_values, y_axis_values]).T
 fig = plt.figure("Heat Map of Relevancy Values")
 ax = fig.add_subplot()
 cat = ax.matshow(
-    combined_Matrix, interpolation="bicubic"
+    combined_Matrix, interpolation="bicubic" , cmap="gist_heat"
 )  # As I have tested interpolation  = nearest or bilinear or bicubic I saw the change in the gradiency of colors on heat map asit affects how colors are smoothed together
 fig.colorbar(cat)
 # ax.set_xticks(np.arange(len(x_axis_int_values)))
