@@ -267,6 +267,21 @@ for single_node in nodes_of_relevance_network:
 #     f.write(json.dumps(network_graph_dict, indent=4))
 
 
+# Making a relevancy json file of most relevant results with their links
+# 2 Display it in streamlit
+
+
+relevant_results_with_links = {}
+for key in relevancy_valued_dict_2.keys():
+    for single_result in organic_results:
+        if key == single_result["title"]:
+            relevant_results_with_links[key] = single_result["link"]
+
+
+with open("relevant_results_with_links.json", "w") as f:
+    f.write(json.dumps(relevant_results_with_links, indent=4))
+
+
 G = nx.Graph()
 
 G.add_nodes_from(nodes_of_relevance_network)
