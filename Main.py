@@ -272,10 +272,10 @@ for single_node in nodes_of_relevance_network:
 
 
 relevant_results_with_links = {}
-for key in relevancy_valued_dict_2.keys():
+for node in nodes_of_relevance_network:
     for single_result in organic_results:
-        if key == single_result["title"]:
-            relevant_results_with_links[key] = single_result["link"]
+        if node == single_result["title"]:
+            relevant_results_with_links[node] = single_result["link"]
 
 
 with open("relevant_results_with_links.json", "w") as f:
