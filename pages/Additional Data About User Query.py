@@ -25,6 +25,8 @@ with st.container(border=True):
 with Data_Column:
     with st.container(border=True):
         st.title("Additional Data :blue[About] Your Query")
+        st.subheader("If you :violet[Didn't] find any :red[Info] :red[here] Try to scrap it by yourself :red[through] the provided links in the another page") 
+
         st.table(data)
 
 with Image_Column:
