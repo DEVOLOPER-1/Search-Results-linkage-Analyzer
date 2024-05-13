@@ -35,6 +35,17 @@ with open("website_title_with_position.json") as f:
 with open("website_title_with_relevancy_values_2.json") as f:
     data_2 = json.load(f)
 
+
+with open("filtered_relevancy_valued_dict_2.json") as f:
+    filtered_data = json.load(f)
+filtered_relevancy_valued_dict_2_df = pd.DataFrame.from_dict(
+    filtered_data, orient="index"
+)
+
+with open("all_results_links_dict.json") as f:
+    data_3 = json.load(f)
+organic_results_df = pd.DataFrame.from_dict(data_3, orient="index")
+
 Relevancy_Network_Map = cv2.imread("Network Graph.jpeg")
 Relevancy_Network_Map = cv2.cvtColor(Relevancy_Network_Map, cv2.COLOR_BGR2RGB)
 with open("degree_centrality_of_network.json") as f:
@@ -51,10 +62,15 @@ with open("betweenness_centrality_of_network.json") as f:
 with open("relevant_results_with_links.json") as f:
     relevant_results_with_links_data = json.load(f)
 
+with open("filtered_relevancy_valued_dict_2_links.json") as f:
+    filtered_relevancy_valued_dict_2_links_data = json.load(f)
+filtered_relevancy_valued_dict_2_links_data_df = pd.DataFrame.from_dict(
+    filtered_relevancy_valued_dict_2_links_data, orient="index"
+)
 ThreeD_Network_Map_Graph = cv2.imread("3D Graph.jpeg")
 ThreeD_Network_Map_Graph = cv2.cvtColor(ThreeD_Network_Map_Graph, cv2.COLOR_BGR2RGB)
 
-#Relevancy_heatmap_Graph_Data = cv2.imread("Heatmap.jpeg")
+# Relevancy_heatmap_Graph_Data = cv2.imread("Heatmap.jpeg")
 # Relevancy_heatmap_Graph_Data = cv2.cvtColor(
 #     Relevancy_heatmap_Graph_Data, cv2.COLOR_BGR2RGB
 # )
@@ -235,33 +251,40 @@ with ThreeD_Network_Map:
 with Relevancy_heatmap:
     with st.container(border=True):
         st.title(":blue[Relevancy] Heat Map")
-        st.subheader(":violet[Based on] the :red[most High] Relevancy Values")
-        fig_1 = px.density_heatmap(website_title_with_relevancy_values_df , text_auto=False  , 
-                                orientation = 'h',
-                                x = website_title_with_relevancy_values_df.index , 
-                                y = website_title_with_relevancy_values_df.index,
-                                color_continuous_scale='reds')
-        fig_2 = px.imshow(website_title_with_relevancy_values_df , 
-                        text_auto=True  ,
-                        color_continuous_scale='reds')
+        st.subheader(":violet[Based on] the :red[Most] Relevancy Values")
+        fig_1 = px.density_heatmap(
+            filtered_relevancy_valued_dict_2_df,
+            text_auto=False,
+            orientation="h",
+            x=filtered_relevancy_valued_dict_2_df.index,
+            color_continuous_scale="reds",
+        )
+        fig_2 = px.imshow(
+            filtered_relevancy_valued_dict_2_df,
+            text_auto=True,
+            color_continuous_scale="reds",
+        )
     tab1, tab2 = st.tabs(["Adjacency Matrix", "Relevance Values Vector"])
     with tab1:
-        st.plotly_chart(fig_1, theme="streamlit" , use_container_width = True)
+        st.plotly_chart(fig_1, theme="streamlit", use_container_width=True)
     with tab2:
-        st.plotly_chart(fig_2, theme="streamlit" , use_container_width = True)
-
-
+        st.plotly_chart(fig_2, theme="streamlit", use_container_width=True)
 
         with st.expander("See explanation :point_down:"):
             st.write(
                 "The Relevancy Heat Map shows the most relevant "
                 "results according to the other results. You will "
-                "realize that as you are reaching the exact value of relevancy "
-                "the color of the result in heat map will be more liter . "
+                "realize that as you are reaching the greater value of relevancy "
+                "the color of the result in heat map will be more denser . "
             )
 
 
 with st.container(border=True):
     st.title(":blue[Relevant Results] Links")
     st.subheader(":violet[Based on] the :red[most High] Relevancy Values")
-    st.dataframe(relevant_results_with_links_data_df)
+    st.dataframe(filtered_relevancy_valued_dict_2_links_data_df)
+
+with st.container(border=True):
+    st.title(":blue[All Results] Links")
+    st.subheader(":violet[Based on] :red[Google] Relevant Results")
+    st.dataframe(organic_results_df)

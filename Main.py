@@ -79,10 +79,10 @@ while (len(User_Api) != len(serp_api_sample)) and event != "Cancel":
         break
 
 google_search_params = {"engine": "google", "q": User_Query, "api_key": User_Api}
-Google_Knowledge_Graph_params = {
-    "q": User_Query,
-"api_key": User_Api
-}
+
+Google_Knowledge_Graph_params = {"q": User_Query, "api_key": User_Api}
+
+Google_images_params = {"engine": "google_images", "q": User_Query, "api_key": User_Api}
 
 
 search = GoogleSearch(google_search_params)
@@ -93,17 +93,27 @@ organic_results = google_search_params_results["organic_results"]
 
 search = GoogleSearch(Google_Knowledge_Graph_params)
 Google_Knowledge_Graph_params_results = search.get_dict()
-knowledge_graph = Google_Knowledge_Graph_params_results["knowledge_graph"]
-print(f"{knowledge_graph}\n\n\n\n\n\n\n")
+try:
+    knowledge_graph = Google_Knowledge_Graph_params_results["knowledge_graph"]
+except:  # noqa: E722
+    print("Has No Knowledge Graph")
+try:
+    print(f"{knowledge_graph}\n\n\n\n\n\n\n")
+except:  # noqa: E722
+    print("Has No Knowledge Graph")
+
+search = GoogleSearch(Google_images_params)
+Google_images_params_results = search.get_dict()
+
 
 ################# Retrieving Some Additional Data About Users' Query from Knowledge Graph ##########################
 try:
     tile_of_your_query_in_knowledge_graph = knowledge_graph["title"]
-except: # noqa: E722
+except:  # noqa: E722
     tile_of_your_query_in_knowledge_graph = "Not Available"
 try:
     type_of_entity = knowledge_graph["entity_type"]
-except: # noqa: E722
+except:  # noqa: E722
     type_of_entity = "Not Available"
 try:
     query_description = knowledge_graph["description"]
@@ -137,13 +147,13 @@ try:
     query_death = knowledge_graph["died"]
 except:  # noqa: E722
     query_death = "Not Available"
-try: 
+try:
     query_awards = knowledge_graph["awards"]
 except:  # noqa: E722
     query_awards = "Not Available"
-try: 
+try:
     query_spouse = knowledge_graph["spouse"]
-except: # noqa: E722
+except:  # noqa: E722
     query_spouse = "Not Available"
 try:
     query_born = knowledge_graph["born"]
@@ -151,20 +161,33 @@ except:  # noqa: E722
     query_born = "Not Available"
 try:
     quey_known_for = knowledge_graph["known_for"]
-except:  # noqa: E722       
+except:  # noqa: E722
     quey_known_for = "Not Available"
-    
+
 try:
     knowledge_graph_search_link = knowledge_graph["knowledge_graph_search_link"]
 except:  # noqa: E722
     knowledge_graph_search_link = "Not Available"
 try:
-    query_image_link = knowledge_graph["image"]
-    image_data = requests.get(query_image_link).content 
-    with open("image_knowledge_graph.jpeg", 'wb') as handler:
-        handler.write(image_data)
+    query_head_quarters = knowledge_graph["headquarters"]
 except:  # noqa: E722
-    query_image_link = "Not Available"
+    query_head_quarters = "Not Available"
+try:
+    query_sales = knowledge_graph["sales"]
+except:  # noqa: E722
+    query_sales = "Not Available"
+try:
+    query_stock_price = knowledge_graph["stock_price"]
+except:  # noqa: E722
+    query_stock_price = "Not Available"
+try:
+    query_subsidiaries = knowledge_graph["subsidiaries"]
+except:  # noqa: E722
+    query_subsidiaries = "Not Available"
+try:
+    query_executives = knowledge_graph["executives"]
+except:  # noqa: E722
+    query_executives = "Not Available"
 print(
     "\n"
     + tile_of_your_query_in_knowledge_graph
@@ -188,29 +211,66 @@ print(
     + when_query_was_established
     + "\n\n\n\n\n\n\n"
 )
+User_Query_Data = {
+    "Name": tile_of_your_query_in_knowledge_graph,
+    "Entity Type": type_of_entity,
+    "Description": query_description,
+    "Died": query_death,
+    "Education": query_education,
+    "Parents": query_parents,
+    "Founder": query_founder,
+    "President": query_president,
+    "Location": query_location,
+    "Establishment Date": when_query_was_established,
+    "Known For": quey_known_for,
+    "Born": query_born,
+    "Spouse": query_spouse,
+    "Awards": query_awards,
+    "Knowledge Graph Search Link": knowledge_graph_search_link,
+    "Head Quarters": query_head_quarters,
+    "Sales": query_sales,
+    "Stock Price": query_stock_price,
+    "Subsidiaries": query_subsidiaries,
+    "Executives": query_executives,
+}
+with open("Additional_User_Query_Data.json", "w") as f:
+    f.write(json.dumps(User_Query_Data, indent=4))
 ######################### Accessing image from Knowledge Graph ############################
 
-print("Printing image from Knowledge Graph:")
-try:
-    image_knowledge_graph_list = knowledge_graph["header_images"]
-    for num , single_dict in enumerate(image_knowledge_graph_list):
-        if num == 0:
-            image_knowledge_graph = single_dict.values()
-            image_data = requests.get(image_knowledge_graph).content 
-            with open("image_knowledge_graph.jpeg", 'wb') as handler:
-                handler.write(image_data)
-except:  # noqa: E722
-    print("Key Error:", "header_images\n\n\n\n\n\n")
+# print("Printing image from Knowledge Graph:")
+# try:
+#     image_knowledge_graph_list = knowledge_graph["header_images"]
+#     for num , single_dict in enumerate(image_knowledge_graph_list):
+#         if num == 0:
+#             image_knowledge_graph = single_dict.values()
+#             image_data = requests.get(image_knowledge_graph).content
+#             with open("image_knowledge_graph.jpeg", 'wb') as handler:
+#                 handler.write(image_data)
+# except:  # noqa: E722
+#     print("Key Error:", "header_images\n\n\n\n\n\n")
 
-            
+############################# Retrieve Image of User's Query ################################
+image_results = Google_images_params_results["images_results"]
+first_image_dict = image_results[0]
+image_link = first_image_dict["original"]
+if requests.get(image_link).status_code == 200:
+    image_link_data = requests.get(image_link).content
+    with open("Additional_User_Query_Image.jpeg", "wb") as f:
+        f.write(image_link_data)
+
+
 # Primitive Display for Organic Google Search Results
 for num, single_result in enumerate(organic_results):
     print(
         f"Result {num+1}: {single_result["title"]} , Position {single_result["position"]} "
     )
     print("____________________________________________________________")
-
-
+all_results_links_dict = {}
+for num, result in enumerate(organic_results):
+    if result["title"] not in all_results_links_dict:
+        all_results_links_dict[result["title"]] = result["link"]
+with open("all_results_links_dict.json", "w") as f:
+    f.write(json.dumps(all_results_links_dict, indent=4))
 # Making a list of all words in snippets to re-compare it with each value of snippet dict
 the_all_words_of_tuples_of_snippets = []
 for snippet in organic_results:
@@ -354,10 +414,30 @@ TF_Values_tuple_Mean = statistics.mean(TF_Values_tuple)
 Treshold = TF_Values_tuple_Mean
 print(Treshold)
 
+
+##Making filtered_relevancy_valued_dict_2
+filtered_relevancy_valued_dict_2 = {
+    key: value
+    for key, value in relevancy_valued_dict_2.items()
+    if value > Treshold * 0.5
+}
+filtered_relevancy_valued_dict_2_links = {}
+for result in organic_results:
+    for key in filtered_relevancy_valued_dict_2.keys():
+        if key == result["title"]:
+            filtered_relevancy_valued_dict_2_links[key] = result["link"]
+with open("filtered_relevancy_valued_dict_2_links.json", "w") as f:
+    f.write(json.dumps(filtered_relevancy_valued_dict_2_links, indent=4))
+# Printing filtered_relevancy_valued_dict_2
+print(f"{filtered_relevancy_valued_dict_2}\n\n")
+###Saving the filtered_relevancy_valued_dict_2 to json
+with open("filtered_relevancy_valued_dict_2.json", "w") as f:
+    f.write(json.dumps(filtered_relevancy_valued_dict_2, indent=4))
+
+
 # Making Network map
 nodes_of_relevance_network = []
 edges_of_relevance_network = []
-
 
 for key, item in relevancy_valued_dict_2.items():
     if item > (
