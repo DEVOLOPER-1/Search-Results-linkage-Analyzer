@@ -3,7 +3,7 @@ import streamlit as st
 import pandas as pd
 import cv2
 import json
-
+import plotly.express as px
 
 # Page configuration
 st.set_page_config(
@@ -16,6 +16,7 @@ st.set_page_config(
         "Get help": "https://github.com/DEVOLOPER-1",
     },
 )
+
 
 st.balloons()
 
@@ -53,10 +54,10 @@ with open("relevant_results_with_links.json") as f:
 ThreeD_Network_Map_Graph = cv2.imread("3D Graph.jpeg")
 ThreeD_Network_Map_Graph = cv2.cvtColor(ThreeD_Network_Map_Graph, cv2.COLOR_BGR2RGB)
 
-Relevancy_heatmap_Graph_Data = cv2.imread("Heatmap.jpeg")
-Relevancy_heatmap_Graph_Data = cv2.cvtColor(
-    Relevancy_heatmap_Graph_Data, cv2.COLOR_BGR2RGB
-)
+#Relevancy_heatmap_Graph_Data = cv2.imread("Heatmap.jpeg")
+# Relevancy_heatmap_Graph_Data = cv2.cvtColor(
+#     Relevancy_heatmap_Graph_Data, cv2.COLOR_BGR2RGB
+# )
 website_title_with_position_df = pd.DataFrame.from_dict(data, orient="index")
 # table = st.table(website_title_with_position_df) Just for testing purpose and it makes a print function
 website_title_with_relevancy_values_df = pd.DataFrame.from_dict(data_2, orient="index")
@@ -235,7 +236,22 @@ with Relevancy_heatmap:
     with st.container(border=True):
         st.title(":blue[Relevancy] Heat Map")
         st.subheader(":violet[Based on] the :red[most High] Relevancy Values")
-        st.image(Relevancy_heatmap_Graph_Data)
+        fig_1 = px.density_heatmap(website_title_with_relevancy_values_df , text_auto=False  , 
+                                orientation = 'h',
+                                x = website_title_with_relevancy_values_df.index , 
+                                y = website_title_with_relevancy_values_df.index,
+                                color_continuous_scale='reds')
+        fig_2 = px.imshow(website_title_with_relevancy_values_df , 
+                        text_auto=True  ,
+                        color_continuous_scale='reds')
+    tab1, tab2 = st.tabs(["Adjacency Matrix", "Relevance Values Vector"])
+    with tab1:
+        st.plotly_chart(fig_1, theme="streamlit" , use_container_width = True)
+    with tab2:
+        st.plotly_chart(fig_2, theme="streamlit" , use_container_width = True)
+
+
+
         with st.expander("See explanation :point_down:"):
             st.write(
                 "The Relevancy Heat Map shows the most relevant "
