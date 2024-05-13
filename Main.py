@@ -8,7 +8,7 @@ import os  # I imported this library to check in future for a file that contain 
 from networkx.algorithms.community.centrality import girvan_newman
 import numpy as np
 import PySimpleGUI as sg
-
+import requests
 
 # I should make a condition to force the user to enter 3 words at least
 
@@ -49,6 +49,8 @@ serp_api_sample = "714b25eb147b43b3885fabb755c6a3682a48533965aaa15ed6b2a8492aff3
 User_Query = values[0]
 User_Api = values[1]
 print(User_Query, User_Api)
+
+
 while (
     User_Query == " "
     or User_Query is None
@@ -76,18 +78,132 @@ while (len(User_Api) != len(serp_api_sample)) and event != "Cancel":
         window.close()
         break
 
-params = {"engine": "google", "q": User_Query, "api_key": User_Api}
+google_search_params = {"engine": "google", "q": User_Query, "api_key": User_Api}
+Google_Knowledge_Graph_params = {
+    "q": User_Query,
+"api_key": User_Api
+}
 
 
-search = GoogleSearch(params)
-results = search.get_dict()
-organic_results = results["organic_results"]
+search = GoogleSearch(google_search_params)
+google_search_params_results = search.get_dict()
+organic_results = google_search_params_results["organic_results"]
 print(f"{organic_results}\n\n\n\n\n\n\n")
+organic_results = google_search_params_results["organic_results"]
 
+search = GoogleSearch(Google_Knowledge_Graph_params)
+Google_Knowledge_Graph_params_results = search.get_dict()
+knowledge_graph = Google_Knowledge_Graph_params_results["knowledge_graph"]
+print(f"{knowledge_graph}\n\n\n\n\n\n\n")
 
-organic_results = results["organic_results"]
+################# Retrieving Some Additional Data About Users' Query from Knowledge Graph ##########################
+try:
+    tile_of_your_query_in_knowledge_graph = knowledge_graph["title"]
+except: # noqa: E722
+    tile_of_your_query_in_knowledge_graph = "Not Available"
+try:
+    type_of_entity = knowledge_graph["entity_type"]
+except: # noqa: E722
+    type_of_entity = "Not Available"
+try:
+    query_description = knowledge_graph["description"]
+except:  # noqa: E722
+    query_description = "Not Available"
+try:
+    query_education = knowledge_graph["education"]
+except:  # noqa: E722
+    query_education = "Not Available"
+try:
+    query_parents = knowledge_graph["parents"]
+except:  # noqa: E722
+    query_parents = "Not Available"
+try:
+    query_founder = knowledge_graph["founder"]
+except:  # noqa: E722
+    query_founder = "Not Available"
+try:
+    query_president = knowledge_graph["president"]
+except:  # noqa: E722
+    query_president = "Not Available"
+try:
+    query_location = knowledge_graph["location"]
+except:  # noqa: E722
+    query_location = "Not Available"
+try:
+    when_query_was_established = knowledge_graph["established"]
+except:  # noqa: E722
+    when_query_was_established = "Not Available"
+try:
+    query_death = knowledge_graph["died"]
+except:  # noqa: E722
+    query_death = "Not Available"
+try: 
+    query_awards = knowledge_graph["awards"]
+except:  # noqa: E722
+    query_awards = "Not Available"
+try: 
+    query_spouse = knowledge_graph["spouse"]
+except: # noqa: E722
+    query_spouse = "Not Available"
+try:
+    query_born = knowledge_graph["born"]
+except:  # noqa: E722
+    query_born = "Not Available"
+try:
+    quey_known_for = knowledge_graph["known_for"]
+except:  # noqa: E722       
+    quey_known_for = "Not Available"
+    
+try:
+    knowledge_graph_search_link = knowledge_graph["knowledge_graph_search_link"]
+except:  # noqa: E722
+    knowledge_graph_search_link = "Not Available"
+try:
+    query_image_link = knowledge_graph["image"]
+    image_data = requests.get(query_image_link).content 
+    with open("image_knowledge_graph.jpeg", 'wb') as handler:
+        handler.write(image_data)
+except:  # noqa: E722
+    query_image_link = "Not Available"
+print(
+    "\n"
+    + tile_of_your_query_in_knowledge_graph
+    + "\n"
+    + type_of_entity
+    + "\n"
+    + query_description
+    + "\n"
+    + query_death
+    + "\n"
+    + query_education
+    + "\n"
+    + query_parents
+    + "\n"
+    + query_founder
+    + "\n"
+    + query_president
+    + "\n"
+    + query_location
+    + "\n"
+    + when_query_was_established
+    + "\n\n\n\n\n\n\n"
+)
+######################### Accessing image from Knowledge Graph ############################
 
-# Primitive Display for Results
+print("Printing image from Knowledge Graph:")
+try:
+    image_knowledge_graph_list = knowledge_graph["header_images"]
+    for num , single_dict in enumerate(image_knowledge_graph_list):
+        if num == 0:
+            image_knowledge_graph = single_dict.values()
+            image_data = requests.get(image_knowledge_graph).content 
+            with open("image_knowledge_graph.jpeg", 'wb') as handler:
+                handler.write(image_data)
+except:  # noqa: E722
+    print("Key Error:", "header_images\n\n\n\n\n\n")
+
+            
+# Primitive Display for Organic Google Search Results
 for num, single_result in enumerate(organic_results):
     print(
         f"Result {num+1}: {single_result["title"]} , Position {single_result["position"]} "
@@ -403,4 +519,4 @@ plt.savefig("3D Graph.jpeg", format="JPEG", bbox_inches="tight", dpi=1900)
 # Launching Dashboard
 if event == "Display Results in Dashboard":
     window.close()
-    os.system('cmd /c "streamlit run Parent_DashBoard.py"')
+    os.system('cmd /c "streamlit run main_page.py"')
