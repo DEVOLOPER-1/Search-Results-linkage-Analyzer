@@ -11,11 +11,10 @@ st.subheader("Some Additional Data About Your Query :point_down:")
 st.balloons()
 
 # file import
-knowledge_graph_image = cv2.imread("image_knowledge_graph.jpeg")
 with open("Additional_User_Query_Data.json") as f:
     data = json.load(f)
-image = cv2.imread("Additional_User_Query_Image.jpeg")
-true_image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+knowledge_graph_image = cv2.imread("Additional_User_Query_Image.jpeg")
+true_image = cv2.cvtColor(knowledge_graph_image, cv2.COLOR_BGR2RGB)
 Data_Column, Image_Column = st.columns(2)
 
 with st.container(border=True):

@@ -251,12 +251,13 @@ with open("Additional_User_Query_Data.json", "w") as f:
 
 ############################# Retrieve Image of User's Query ################################
 image_results = Google_images_params_results["images_results"]
-first_image_dict = image_results[0]
-image_link = first_image_dict["original"]
-if requests.get(image_link).status_code == 200:
-    image_link_data = requests.get(image_link).content
-    with open("Additional_User_Query_Image.jpeg", "wb") as f:
-        f.write(image_link_data)
+for image_result in image_results:
+    image_link = image_result["original"]
+    if requests.get(image_link).status_code == 200:
+        image_link_data = requests.get(image_link).content
+        with open("Additional_User_Query_Image.jpeg", "wb") as f:
+            f.write(image_link_data)
+        break
 
 
 # Primitive Display for Organic Google Search Results
