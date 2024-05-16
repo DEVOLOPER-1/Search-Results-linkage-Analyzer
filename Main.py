@@ -17,7 +17,7 @@ layout = [
     [sg.Text("Enter your Query", background_color="black", text_color="white")],
     [sg.InputText()],
     [sg.Text("Enter SERP API key", background_color="black", text_color="white")],
-    [sg.InputText()],
+    [sg.InputText( password_char='*')],
     [
         sg.Button("Display Results in Dashboard", button_color="black"),
         sg.Button("Cancel", button_color="black"),
