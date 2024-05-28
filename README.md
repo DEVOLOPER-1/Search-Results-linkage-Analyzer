@@ -1,6 +1,3 @@
-Absolutely! Here's the updated README with a note about the project being a work in progress:
-
-```markdown
 # Welcome to the Search Results Linkage Analyzer (S.R.L.A.)! 🎉
 
 Hey there! Welcome to the Search Results Linkage Analyzer (S.R.L.A.) project! This app is your new best friend for diving deep into search results and getting the most relevant insights in a fun and interactive way.
@@ -73,7 +70,4 @@ Ready to dive in? Download the S.R.L.A. app from the link below and start explor
 
 🚧 **This is not the final version of our project. The S.R.L.A. app is still in its early stages and under development.** 🚧
 
-Happy Analyzing! 😊
-```
-
-Feel free to tweak it further if needed! Enjoy using the Search Results Linkage Analyzer! 🎉
+Happy analyzing! 😊
