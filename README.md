@@ -59,7 +59,7 @@ Great question! The S.R.L.A. app retrieves search result links and analyzes thei
 
 We'd love to hear from you! Check out the “About” or “Get Help” sections in the app for more information or to reach out with any questions. If you have any issues or suggestions, don't hesitate to contact us.
 
-https://www.linkedin.com/in/youssef-mohammad-9341a71a7?lipi=urn%3Ali%3Apage%3Ad_flagship3_feed%3Bv9IaR6wuSWawwmi8p2Kjjg%3D%3D
+https://shorturl.at/nQqEd
 
 ## Download the App ⬇️
 
